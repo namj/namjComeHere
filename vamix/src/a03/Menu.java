@@ -127,7 +127,7 @@ public class Menu extends JFrame implements ActionListener{
 		edit = new JMenu("Edit");
 		edit.setForeground(Color.LIGHT_GRAY);
 		edit.setMnemonic(KeyEvent.VK_E);
-		_titleCredit = new JMenuItem("Add title/credit page");
+		_titleCredit = new JMenuItem("Add title page(s)");
 		_titleCredit.setActionCommand("Create title/credit");
 		_titleCredit.addActionListener(this);
 		edit.add(_titleCredit);

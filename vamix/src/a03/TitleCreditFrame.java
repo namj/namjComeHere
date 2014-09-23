@@ -31,15 +31,24 @@ public class TitleCreditFrame extends JFrame implements ActionListener {
 	
 	public TitleCreditFrame(){
 		
-		super("Create Title/Credit page(s)");
+		super("Create Title page(s)");
 		
 		ImageIcon openFile = new ImageIcon(iconPath + "/open_button.gif");
-		_browseButton.setIcon(openFile);
-		_browseButton.setOpaque(false);
-		_browseButton.setContentAreaFilled(false);
-		_browseButton.setBorderPainted(false);
-		_browseButton.setFocusPainted(false);
-		add(openButton);
+		
+		_browseButton1 = new JButton();
+		_browseButton1.setIcon(openFile);
+		_browseButton1.setOpaque(false);
+		_browseButton1.setContentAreaFilled(false);
+		_browseButton1.setBorderPainted(false);
+		_browseButton1.setFocusPainted(false);
+		
+		_browseButton2 = new JButton();
+		_browseButton2.setIcon(openFile);
+		_browseButton2.setOpaque(false);
+		_browseButton2.setContentAreaFilled(false);
+		_browseButton2.setBorderPainted(false);
+		_browseButton2.setFocusPainted(false);
+		
 		
 		setBackground(Color.LIGHT_GRAY);
 		setSize(600,350);
@@ -50,16 +59,28 @@ public class TitleCreditFrame extends JFrame implements ActionListener {
 		
 		this.add(_label1 = new JLabel("Enter text"));
 		_label1.setBounds(25, 10, 200, 20);
+		
 		this.add(_textArea = new JTextArea());
 		_textArea.setBounds(25, 30, 550, 100);
+		
 		this.add(_label2 = new JLabel("Select music"));
 		_label2.setBounds(25, 140, 200, 20);
+		
 		this.add(_textField1 = new JTextField());
 		_textField1.setBounds(25, 160, 500, 20);
+		
+		this.add(_browseButton1);
+		_browseButton1.setBounds(540 , 160 , 30, 30);
+		
 		this.add(_label3 = new JLabel("select background picture"));
 		_label3.setBounds(25, 180, 200,20 );
+		
 		this.add(_textField2 = new JTextField());
 		_textField2.setBounds(25,200,500,20);
+		
+		this.add(_browseButton2);
+		_browseButton2.setBounds(540 , 200 , 30, 30);
+		
 		this.add(_generateButton = new JButton("Generate!"));
 		_generateButton.setBounds(200, 250, 200,50);
 		_generateButton.addActionListener(this);
