@@ -88,7 +88,7 @@ public class Menu extends JFrame implements ActionListener{
 	private JMenuBar setUpMenuBar() {
 		//create object for all menu bar, menus and items
 		JMenu file, edit, help, _space, _space2;
-		JMenuItem _save, _open, _close, _exit, _dl, _title;
+		JMenuItem _save, _open, _close, _exit, _dl, _title, _credit;
 		JMenuBar menuBar = new JMenuBar();
 		
 		//set the graphics (color) for the Menu bar
@@ -131,6 +131,10 @@ public class Menu extends JFrame implements ActionListener{
 		_title.setActionCommand("Create title");
 		_title.addActionListener(this);
 		edit.add(_title);
+		_credit = new JMenuItem("Add credit page(s)");
+		_credit.setActionCommand("Create credit");
+		_credit.addActionListener(this);
+		edit.add(_credit);
 		menuBar.add(edit);
 		menuBar.add(_space2);
 		
