@@ -65,7 +65,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, Integer> {
 			while ((line = stdoutF.readLine()) != null) {
 				System.out.println(line);
 			}
-			
+			/**
 			//terminal command to turn main vid into .ts
 			cmd = "avconv -i "+ _videoPath +" -vcodec libx264 -acodec aac -bsf:v h264_mp4toannexb -f mpegts -strict experimental -y file2.ts";
 			ProcessBuilder Builder4 = new ProcessBuilder("/bin/bash","-c",cmd);
@@ -76,7 +76,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, Integer> {
 			line = null;
 			while ((line = stdoutH.readLine()) != null) {
 				System.out.println(line);
-			}
+			}*/
 			
 			//terminal command to concat the 2 .ts files and turn into mp4.
 			cmd = "avconv -i concat:file1.ts\\|file2.ts -c copy -bsf:a aac_adtstoasc -y Out.mp4";
@@ -103,7 +103,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, Integer> {
 			while ((line = stdoutF.readLine()) != null) {
 				System.out.println(line);
 			}
-			
+			/**
 			//terminal command to turn main vid into .ts
 			cmd = "avconv -i "+ _videoPath +" -vcodec libx264 -acodec aac -bsf:v h264_mp4toannexb -f mpegts -strict experimental -y file2.ts";
 			ProcessBuilder Builder4 = new ProcessBuilder("/bin/bash","-c",cmd);
@@ -114,7 +114,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, Integer> {
 			line = null;
 			while ((line = stdoutH.readLine()) != null) {
 				System.out.println(line);
-			}
+			}*/
 			
 			//terminal command to concat the 2 .ts files and turn into mp4.
 			cmd = "avconv -i concat:file2.ts\\|file3.ts -c copy -bsf:a aac_adtstoasc -y Out.mp4";
