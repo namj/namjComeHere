@@ -128,7 +128,7 @@ public class Menu extends JFrame implements ActionListener{
 		edit.setForeground(Color.LIGHT_GRAY);
 		edit.setMnemonic(KeyEvent.VK_E);
 		_titleCredit = new JMenuItem("Add title page(s)");
-		_titleCredit.setActionCommand("Create title/credit");
+		_titleCredit.setActionCommand("Create title");
 		_titleCredit.addActionListener(this);
 		edit.add(_titleCredit);
 		menuBar.add(edit);
@@ -232,8 +232,8 @@ public class Menu extends JFrame implements ActionListener{
 				DownloadFrame downloadFrame = new DownloadFrame(dlURL);
 				downloadFrame.startDownload();
 			}
-		} else if (e.getActionCommand().equals("Create title/credit")){
-			TitleCreditFrame titleCreditFrame = new TitleCreditFrame();
+		} else if (e.getActionCommand().equals("Create title")){
+			CreateTitleFrame titleFrame = new CreateTitleFrame();
 		}
 	}
 }
