@@ -165,8 +165,7 @@ public class CreateTitleFrame extends JFrame implements ActionListener {
 		} else if (e.getSource() == _generateButton){
 			
 			TitleCreditGenerator generator = new TitleCreditGenerator(true, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath);
-			
-			
+			generator.execute();
 		}
 		
 	}
