@@ -3,6 +3,8 @@ package a03;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -12,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.plaf.metal.MetalSliderUI;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
@@ -78,6 +82,7 @@ public class MainPanel extends JPanel{
 			@Override
 			public void mousePressed(MouseEvent arg0) {	
 				if (mediaProgress.isEnabled()) {
+					currentVideo.pause();
 					//get mouse point
 					double point = mediaProgress.getMousePosition().getX()-7.9;
 					//get ratio of slider value per pixel
@@ -93,6 +98,9 @@ public class MainPanel extends JPanel{
 			}
 			@Override
 			public void mouseReleased(MouseEvent arg0) {	
+				if (mediaProgress.isEnabled()) {
+					currentVideo.play();
+				}
 			}			
 		});
 		mediaProgress.setEnabled(false);
@@ -114,6 +122,7 @@ public class MainPanel extends JPanel{
 		
 		vP = new VolumePanel();
 		add(vP);
+		
 	}
 	
 	//-------------------------METHODS FOR FUNCTION ENABLITLIY------------------//
@@ -185,13 +194,8 @@ public class MainPanel extends JPanel{
 	
 	//method to literally restart video that was playing, when it ends
 	public void restart() {
-		currentVideo.playMedia(mediaFile.getAbsolutePath());
-		while (true) {
-			if (currentVideo.isPlaying()) {
-				currentVideo.pause();
-				break;
-			}
-		}
+		currentVideo.startMedia(mediaFile.getAbsolutePath());
+		currentVideo.pause();
 		setCurrentVid(currentVideo, mediaFile);
 		pbP.setToDefault();
 	}

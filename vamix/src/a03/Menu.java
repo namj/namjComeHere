@@ -9,7 +9,6 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -20,6 +19,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.IOException;
 
 public class Menu extends JFrame implements ActionListener{
 	
@@ -38,6 +38,9 @@ public class Menu extends JFrame implements ActionListener{
 	private EmbeddedMediaPlayerComponent ourMediaPlayer;
 	private EmbeddedMediaPlayer currentVideo;
 	
+	private JButton openButton;
+	private JButton dlButton;
+	
 	public Menu() {
 		
 		//Frame setup
@@ -53,11 +56,10 @@ public class Menu extends JFrame implements ActionListener{
 			public void windowClosing(WindowEvent e) {
 				//if a video has been used, set default volume to 50 and make it not muted
 				if (currentVideo != null) {
-					if (currentVideo.isMute() == false) { //mute video before hand
-						currentVideo.mute();   //to avoid random outburst/shrink of sound
-					}
 					currentVideo.setVolume(60);
-					currentVideo.mute(); //not mute it after the mute
+					if (currentVideo.isMute()) {
+						currentVideo.mute(); //not mute if muted
+					}
 				}
 				System.exit(0); //exit program
 			}		
@@ -80,7 +82,7 @@ public class Menu extends JFrame implements ActionListener{
 		container = new MainPanel(ourMediaPlayer);
 		
 		//a shortcut open button for the interface set up
-		JButton openButton = new JButton();
+		openButton = new JButton();
 		openButton.setSize(30,30);
 		openButton.setLocation(815,20);
 		openButton.setActionCommand("Open File");
@@ -88,7 +90,7 @@ public class Menu extends JFrame implements ActionListener{
 		container.setOpenButton(openButton);
 		
 		//a shortcut download button for the interface set up
-		JButton dlButton = new JButton("Download");
+		dlButton = new JButton("Download");
 		dlButton.setSize(150,40);
 		dlButton.setLocation(50,15);
 		dlButton.setActionCommand("Download File");
@@ -103,11 +105,33 @@ public class Menu extends JFrame implements ActionListener{
 		setJMenuBar(setUpMenuBar());
 	}
 	
+	private int checkAudioSignal() {
+		if (_mediaFile != null) {
+			String cmd = "avconv -i " + _mediaFile.getAbsolutePath() + " 2>&1 | grep Audio:";
+			ProcessBuilder auSignalBuilder = new ProcessBuilder("/bin/bash","-c",cmd);
+			Process auSignal;
+			try {
+				auSignal = auSignalBuilder.start();
+				int exitValue = auSignal.waitFor();
+				if (exitValue == 0) {
+					return 0;
+				}
+			} catch (IOException | InterruptedException e) {
+				e.printStackTrace();
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Open a file, you retard!");
+			return 1;
+		}
+		return 2;
+	}
+	
 	//Method to set up menu bar to be used in the frame
 	private JMenuBar setUpMenuBar() {
 		//create object for all menu bar, menus and items
 		JMenu file, edit, help, _space, _space2;
 		JMenuItem _save, _open, _close, _exit, _dl, _titleCredit;
+		JMenuItem _rmAudio,_exAudio,_ovAudio;
 		JMenuBar menuBar = new JMenuBar();
 		
 		//set the graphics (color) for the Menu bar
@@ -134,6 +158,8 @@ public class Menu extends JFrame implements ActionListener{
 		_dl.addActionListener(this);
 		_close = new JMenuItem("Close");
 		_exit = new JMenuItem("Exit");
+		_close.setActionCommand("Close");
+		_close.addActionListener(this);
 		file.add(_save);
 		file.add(_open);
 		file.add(_dl);
@@ -149,7 +175,11 @@ public class Menu extends JFrame implements ActionListener{
 		_titleCredit = new JMenuItem("Add title page(s)");
 		_titleCredit.setActionCommand("Create title");
 		_titleCredit.addActionListener(this);
+		_rmAudio = new JMenuItem("Remove Audio");
+		_rmAudio.setActionCommand("rmAudio");
+		_rmAudio.addActionListener(this);
 		edit.add(_titleCredit);
+		edit.add(_rmAudio);
 		menuBar.add(edit);
 		menuBar.add(_space2);
 		
@@ -216,13 +246,8 @@ public class Menu extends JFrame implements ActionListener{
 				if (isVideo || isAudio) {
 					//current video is instantiated and paused immediately when it starts playing
 					currentVideo = ourMediaPlayer.getMediaPlayer();
-					currentVideo.playMedia(_mediaPath);
-					while (true) {
-						if (currentVideo.isPlaying()) {
-							currentVideo.pause();
-							break;
-						}
-					}
+					currentVideo.startMedia(_mediaPath);
+					currentVideo.pause();
 					//video is set in the main panel
 					container.setCurrentVid(currentVideo,_mediaFile);
 					
@@ -250,6 +275,16 @@ public class Menu extends JFrame implements ActionListener{
 				//download frame opened and download commences
 				DownloadFrame downloadFrame = new DownloadFrame(dlURL);
 				downloadFrame.startDownload();
+			}
+		} else if (e.getActionCommand().equals("rmAudio")) {
+			int audioCheck = checkAudioSignal();
+			if (audioCheck == 0) {
+				AudioProcessor aP = new AudioProcessor("rm",_mediaFile);
+				aP.execute();
+			} else if (audioCheck == 2) {
+				String msg = "The media contains no audio signal!\n" +
+						"There is no audio to be removed.";
+				JOptionPane.showMessageDialog(null,msg);
 			}
 		} else if (e.getActionCommand().equals("Create title")){
 			CreateTitleFrame titleFrame = new CreateTitleFrame();
