@@ -11,6 +11,7 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
@@ -28,6 +29,7 @@ public class MainPanel extends JPanel{
 	private VolumePanel vP;
 	
 	private JSlider mediaProgress;
+	private JLabel videoTime;
 	private JTextField videoName;
 	private File mediaFile;
 	private EmbeddedMediaPlayer currentVideo;
@@ -50,8 +52,8 @@ public class MainPanel extends JPanel{
 		
 		//setup of media progress slider to keep track of media
 		mediaProgress = new JSlider();
-		mediaProgress.setSize(videoPlayer.getWidth(),20);
-		mediaProgress.setLocation(videoPlayer.getX(),770);
+		mediaProgress.setSize(videoPlayer.getWidth()-70,20);
+		mediaProgress.setLocation(videoPlayer.getX()+70,770);
 		mediaProgress.setValue(0);
 		mediaProgress.setBackground(Color.BLACK);
 		//modify default UI to remove progress knob of slider
@@ -84,13 +86,11 @@ public class MainPanel extends JPanel{
 				if (mediaProgress.isEnabled()) {
 					currentVideo.pause();
 					//get mouse point
-					double point = mediaProgress.getMousePosition().getX()-7.9;
+					double point = mediaProgress.getMousePosition().getX();
 					//get ratio of slider value per pixel
-					double ratio = mediaProgress.getMaximum() / (mediaProgress.getWidth()-15.8);
-					//get the relative x position in the slider
-					double xRelative = point - mediaProgress.getX();
+					double ratio = mediaProgress.getMaximum() / (mediaProgress.getWidth()-8);
 					//get the value to be used for value/ time
-					double result = ratio * xRelative + mediaProgress.getMaximum()*0.001;
+					double result = ratio * point;
 					//set slider value, play video in time
 					mediaProgress.setValue((int)result);
 					currentVideo.setTime((long)result);
@@ -105,6 +105,13 @@ public class MainPanel extends JPanel{
 		});
 		mediaProgress.setEnabled(false);
 		add(mediaProgress);
+		
+		videoTime = new JLabel("  00:00:00");
+		videoTime.setOpaque(true);
+		videoTime.setBounds(videoPlayer.getX(), 770, 70, 20);
+		videoTime.setForeground(Color.WHITE);
+		videoTime.setBackground(Color.BLACK);
+		add(videoTime);
 		
 		//set up for text field to show what video/ audio is playing
 		videoName = new JTextField("Please open a media file...");
@@ -172,17 +179,6 @@ public class MainPanel extends JPanel{
 		add(dlButton);
 	}
 	
-	//---------------------------METHODS TO REDUCE DUPLICATE CODING---------------//
-	//set up and return a button using only an image icon
-	private JButton setImageButton(ImageIcon img) {
-		JButton imgButton = new JButton(img);
-		imgButton.setOpaque(false);
-		imgButton.setContentAreaFilled(false);
-		imgButton.setBorderPainted(false);
-		imgButton.setFocusPainted(false);
-		return imgButton;
-	}
-	
 	//----------------------METHODS TO ACCESS PRIVATE OBJECTS-----------//
 	
 	//method to retrieve the current
@@ -203,5 +199,28 @@ public class MainPanel extends JPanel{
 	//method used by video progress checker to update progress bar of video
 	public void updateMediaProgress() {
 		mediaProgress.setValue((int)currentVideo.getTime());
+		String hs,ms,ss;
+		long time = currentVideo.getTime()/1000;
+		int hours = (int) time / 3600;
+	    int remainder = (int) time - hours * 3600;
+	    int mins = remainder / 60;
+	    remainder = remainder - mins * 60;
+	    int secs = remainder;
+	    if (hours < 10) {
+	    	hs = "0" + hours;
+	    } else {
+	    	hs = "" + hours;
+	    }
+	    if (mins < 10) {
+	    	ms = "0" + mins;
+	    } else {
+	    	ms = "" + mins;
+	    }
+	    if (secs < 10) {
+	    	ss = "0" + secs;
+	    } else {
+	    	ss = "" + secs;
+	    }
+	    videoTime.setText("   " + hs + ":" + ms + ":" + ss);
 	}
 }

@@ -246,15 +246,8 @@ public class Menu extends JFrame implements ActionListener{
 				if (isVideo || isAudio) {
 					//current video is instantiated and paused immediately when it starts playing
 					currentVideo = ourMediaPlayer.getMediaPlayer();
-					currentVideo.playMedia(_mediaPath);
-					while (true) {
-						if (currentVideo.isPlaying()) {
-							currentVideo.pause();
-							if (currentVideo.isPlayable()) {
-								break;
-							}
-						}
-					}
+					currentVideo.startMedia(_mediaPath);
+					currentVideo.pause();
 					//video is set in the main panel
 					container.setCurrentVid(currentVideo,_mediaFile);
 					
