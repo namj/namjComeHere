@@ -33,7 +33,7 @@ public class DownloadFrame extends JFrame{
 		setBackground(Color.LIGHT_GRAY);
 		setSize(450,230);
 		setLayout(null);
-		setLocation((_screenWidth-450)/2,(_screenHeight-250)/2);
+		setLocation((_screenWidth-450)/2,(_screenHeight-230)/2);
 		
 		//all texts in JLabels set up
 		this.url = new JLabel(url);

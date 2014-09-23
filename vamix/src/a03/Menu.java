@@ -88,7 +88,7 @@ public class Menu extends JFrame implements ActionListener{
 	private JMenuBar setUpMenuBar() {
 		//create object for all menu bar, menus and items
 		JMenu file, edit, help, _space, _space2;
-		JMenuItem _save, _open, _close, _exit, _dl;
+		JMenuItem _save, _open, _close, _exit, _dl, _titleCredit;
 		JMenuBar menuBar = new JMenuBar();
 		
 		//set the graphics (color) for the Menu bar
@@ -127,6 +127,10 @@ public class Menu extends JFrame implements ActionListener{
 		edit = new JMenu("Edit");
 		edit.setForeground(Color.LIGHT_GRAY);
 		edit.setMnemonic(KeyEvent.VK_E);
+		_titleCredit = new JMenuItem("Add title/credit page");
+		_titleCredit.setActionCommand("Create title/credit");
+		_titleCredit.addActionListener(this);
+		edit.add(_titleCredit);
 		menuBar.add(edit);
 		menuBar.add(_space2);
 		
@@ -228,6 +232,8 @@ public class Menu extends JFrame implements ActionListener{
 				DownloadFrame downloadFrame = new DownloadFrame(dlURL);
 				downloadFrame.startDownload();
 			}
+		} else if (e.getActionCommand().equals("Create title/credit")){
+			TitleCreditFrame titleCreditFrame = new TitleCreditFrame();
 		}
 	}
 }
