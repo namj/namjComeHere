@@ -237,7 +237,9 @@ public class Menu extends JFrame implements ActionListener{
 				downloadFrame.startDownload();
 			}
 		} else if (e.getActionCommand().equals("Create title")){
-			CreateTitleFrame titleFrame = new CreateTitleFrame(_mediaPath);
+			CreateTitleCreditFrame titleFrame = new CreateTitleCreditFrame(_mediaPath, "Create Title page(s)");
+		} else if (e.getActionCommand().equals("Create credit")){
+			CreateTitleCreditFrame titleFrame = new CreateTitleCreditFrame(_mediaPath, "Create Credit page(s)");
 		}
 	}
 }

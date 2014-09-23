@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class CreateTitleFrame extends JFrame implements ActionListener {
+public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 
 	//declare variables/components
 	private String _selectedVidPath;
@@ -34,9 +34,9 @@ public class CreateTitleFrame extends JFrame implements ActionListener {
 	private static final int _screenHeight = (int)d.getHeight();
 	private static final int _screenWidth = (int)d.getWidth();
 	
-	public CreateTitleFrame(String mediaPath){
+	public CreateTitleCreditFrame(String mediaPath, String frameTitle){
 		
-		super("Create Title page(s)");
+		super(frameTitle);
 		
 		_selectedVidPath = mediaPath;
 		
