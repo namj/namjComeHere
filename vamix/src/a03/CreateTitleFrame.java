@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 public class CreateTitleFrame extends JFrame implements ActionListener {
 
 	//declare variables/components
+	private String _selectedVidPath;
 	private JTextArea _textArea;
 	private JTextField _textField1;
 	private JTextField _textField2;
@@ -33,9 +34,12 @@ public class CreateTitleFrame extends JFrame implements ActionListener {
 	private static final int _screenHeight = (int)d.getHeight();
 	private static final int _screenWidth = (int)d.getWidth();
 	
-	public CreateTitleFrame(){
+	public CreateTitleFrame(String mediaPath){
 		
 		super("Create Title page(s)");
+		
+		_selectedVidPath = mediaPath;
+		
 		//create image icon for browse file button
 		ImageIcon openFile = new ImageIcon(iconPath + "/open_button.gif");
 		//settings for browse button1
@@ -158,6 +162,11 @@ public class CreateTitleFrame extends JFrame implements ActionListener {
 					//if exception occurs nothing extra happens
 				}
 			}
+		} else if (e.getSource() == _generateButton){
+			
+			TitleCreditGenerator generator = new TitleCreditGenerator(true, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath);
+			
+			
 		}
 		
 	}
