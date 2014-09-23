@@ -1,18 +1,21 @@
 package a03;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
-public class TitleCreditGenerator extends SwingWorker<Integer, String> {
+public class TitleCreditGenerator extends SwingWorker<Integer, String> implements ActionListener {
 	
 	private boolean _titleOrCredit; // true indicates title, false indicates credit
 	private String _text;
@@ -21,6 +24,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> {
 	private String _videoPath;
 	private JFrame _frame;
 	private JLabel _progressText;
+	private JButton _cancelButton;
 	
 
 	public TitleCreditGenerator(boolean titleOrCredit, String text, String music, String image, String path){
@@ -32,12 +36,14 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> {
 		
 		_frame = new JFrame();
 		_progressText = new JLabel("encoding...");
+		_cancelButton = new JButton("Cancel");
+		_cancelButton.addActionListener(this);
 		
 		_frame.setBackground(Color.LIGHT_GRAY);
 		_frame.setSize(300,150);
 		_frame.add(_progressText);
+		_frame.add(_cancelButton);
 		_frame.setVisible(true);
-		
 		
 	}
 	
@@ -56,6 +62,12 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> {
 		while ((line = stdoutB.readLine()) != null) {
 			System.out.println(line);
 			publish("Creating video from image...");
+			//if cancel button has been pressed
+			if (isCancelled()){
+				//destroy process
+				process.destroy();
+				break;
+			}
 		}
 		
 		//terminal command to add 10sec and music to the 10sec video
@@ -70,6 +82,12 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> {
 		while ((line = stdoutD.readLine()) != null) {
 			System.out.println(line);
 			publish("adding music and text to video...");
+			//if cancel button has been pressed
+			if (isCancelled()){
+				//destroy process
+				process.destroy();
+				break;
+			}
 		}
 		
 		if (_titleOrCredit == true) {
@@ -86,6 +104,12 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> {
 			while ((line = stdoutF.readLine()) != null) {
 				System.out.println(line);
 				publish("encoding title page(s)...");
+				//if cancel button has been pressed
+				if (isCancelled()){
+					//destroy process
+					process.destroy();
+					break;
+				}
 			}
 			
 			//terminal command to turn main vid into .ts
@@ -100,6 +124,12 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> {
 			while ((line = stdoutH.readLine()) != null) {
 				System.out.println(line);
 				publish("encoding main video... \nThis process may take a few minutes");
+				//if cancel button has been pressed
+				if (isCancelled()){
+					//destroy process
+					process.destroy();
+					break;
+				}
 			}
 			
 			//terminal command to concat the 2 .ts files and turn into mp4.
@@ -114,6 +144,12 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> {
 			while ((line = stdoutJ.readLine()) != null) {
 				System.out.println(line);
 				publish("adding title page to video...");
+				//if cancel button has been pressed
+				if (isCancelled()){
+					//destroy process
+					process.destroy();
+					break;
+				}
 			}
 			
 		} else {
@@ -130,6 +166,12 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> {
 			while ((line = stdoutF.readLine()) != null) {
 				System.out.println(line);
 				publish("encoding credit page(s)...");
+				//if cancel button has been pressed
+				if (isCancelled()){
+					//destroy process
+					process.destroy();
+					break;
+				}
 			}
 			
 			//terminal command to turn main vid into .ts
@@ -144,6 +186,12 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> {
 			while ((line = stdoutH.readLine()) != null) {
 				System.out.println(line);
 				publish("encoding main video... This process may take a few minutes");
+				//if cancel button has been pressed
+				if (isCancelled()){
+					//destroy process
+					process.destroy();
+					break;
+				}
 			}
 			
 			//terminal command to concat the 2 .ts files and turn into mp4.
@@ -158,6 +206,12 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> {
 			while ((line = stdoutJ.readLine()) != null) {
 				System.out.println(line);
 				publish("adding credit page to video...");
+				//if cancel button has been pressed
+				if (isCancelled()){
+					//destroy process
+					process.destroy();
+					break;
+				}
 			}
 			
 		}
@@ -183,6 +237,14 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> {
 		
 		for (int i = 0 ; i < chunks.size() ; i ++ )
 		_progressText.setText(chunks.get(i));
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == _cancelButton){
+			this.cancel(true);
+		}
 		
 	}
 	
