@@ -27,13 +27,13 @@ public class FastForwarder extends SwingWorker<Void,Void>{
 		while (fastForward) {
 			Thread.sleep(50);
 			currentVideo.skip(100);
+			//if fast forwarded till end, stop and play so that it moves back into
+			//start
+			if (currentVideo.getTime() > currentVideo.getLength()) {
+				currentVideo.play();
+				break;
+			}
 		}
 		return null;
-	}
-
-	@Override
-	protected void done() {
-		//when fast forwarding stops, video plays
-		currentVideo.play();
 	}
 }

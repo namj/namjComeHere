@@ -30,10 +30,4 @@ public class FastBackwarder extends SwingWorker<Void,Void>{
 		}
 		return null;
 	}
-
-	@Override
-	protected void done() {
-		//once rewinding completes video plays normally
-		currentVideo.play();
-	}
 }

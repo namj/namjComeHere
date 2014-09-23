@@ -16,6 +16,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 
 public class Menu extends JFrame implements ActionListener{
@@ -43,7 +46,23 @@ public class Menu extends JFrame implements ActionListener{
 		setLocation(_screenWidth/2 - _menuWidth/2, _screenHeight/2 - _menuHeight/2);
 		setResizable(false);
 		setLayout(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//custom close program exiting listener
+		WindowListener exitListener = new WindowAdapter() {
+			//Before the frame is closed set volume to default, and not mute if muted
+			@Override
+			public void windowClosing(WindowEvent e) {
+				//if a video has been used, set default volume to 50 and make it not muted
+				if (currentVideo != null) {
+					if (currentVideo.isMute() == false) { //mute video before hand
+						currentVideo.mute();   //to avoid random outburst/shrink of sound
+					}
+					currentVideo.setVolume(60);
+					currentVideo.mute(); //not mute it after the mute
+				}
+				System.exit(0); //exit program
+			}		
+		};
+		addWindowListener(exitListener);
 		
 		//-----------------------------------------------------------------------
 		

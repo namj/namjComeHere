@@ -38,6 +38,7 @@ public class PlaybackPanel extends JPanel implements MouseListener{
 	private boolean isFastBackwarding = false;
 	private boolean firstPlay = true;
 	
+	//===================CONSTRUCTOR-SETS UP THE PLAYBACK PANEL==============//
 	public PlaybackPanel() {
 		//set up of the play back panel
 		setOpaque(false);
@@ -107,8 +108,7 @@ public class PlaybackPanel extends JPanel implements MouseListener{
 			public void actionPerformed(ActionEvent e) {
 				//if it is rewinding and clicked
 				if (isFastBackwarding) {
-					setToPause();
-					//rewind stops and video is played normally
+					//rewind stops and video is paused normally
 					fb.stop();
 					isFastBackwarding = false;
 				//if it is not rewinding and clicked
@@ -144,7 +144,6 @@ public class PlaybackPanel extends JPanel implements MouseListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (isFastForwarding) {
-					setToPause();
 					ff.stop();
 					isFastForwarding = false;
 				} else {
@@ -167,15 +166,27 @@ public class PlaybackPanel extends JPanel implements MouseListener{
 		add(ffButton);	
 	}
 	
+	//==================METHODS USED BY CLASSES, INCLUDING THIS ONE======//
+	
+	//sets the current video the play back buttons are operating for
 	public void setCurrentVideo(EmbeddedMediaPlayer m){
 		currentVideo = m;
+		setToPlay(); //paused at first, so set to play
 	}
+	//method to reset all booleans to their default values
+	public void setToDefault() {
+		isPaused = true;
+		isFastForwarding = false;
+		isFastBackwarding = false;
+	}
+	//enables all functions available for audio
 	public void audioOn(){
 		playButton.setEnabled(true);
 		setToPlay();
 		ffButton.setEnabled(false);
 		fbButton.setEnabled(false);
 	}
+	//enables all functions available for media
 	public void videoOn(){
 		playButton.setEnabled(true);
 		setToPlay();
@@ -202,6 +213,9 @@ public class PlaybackPanel extends JPanel implements MouseListener{
 		return imgButton;
 	}
 	
+	//mouse listeners, completely unnecessary but cool
+	//just changes cursors back and forth when entering and exiting component
+	//only when enabled, as well as switching the button icons from highlighted one
 	@Override
 	public void mouseClicked(MouseEvent m) {
 	}

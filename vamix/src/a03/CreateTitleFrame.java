@@ -58,6 +58,7 @@ public class CreateTitleFrame extends JFrame implements ActionListener {
 		setSize(600,350);
 		setLayout(null);
 		setLocation((_screenWidth-600)/2,(_screenHeight-350)/2);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		//add components to this frame
 		this.add(_label1 = new JLabel("Enter text"));

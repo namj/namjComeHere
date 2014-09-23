@@ -25,6 +25,7 @@ public class MainPanel extends JPanel{
 	
 	private JSlider mediaProgress;
 	private JTextField videoName;
+	private File mediaFile;
 	private EmbeddedMediaPlayer currentVideo;
 	private EmbeddedMediaPlayerComponent videoPlayer;
 	private MediaProgressChecker mPC;
@@ -133,19 +134,20 @@ public class MainPanel extends JPanel{
 	//-----------------------METHODS TO SET UP COMPONENTS FROM OTHER CLASSES------------------//
 	
 	//method to set the current video (media)
-	public void setCurrentVid(EmbeddedMediaPlayer vid, File vidFile){
-		currentVideo = vid;
-		pbP.setCurrentVideo(currentVideo);
-		vP.setCurrentVideo(currentVideo);
-		//media name is shown on text field to show what's playing
-		videoName.setText(vidFile.getName());
-		//set up of progress slider with media time length
-		mediaProgress.setMinimum(0);
-		mediaProgress.setMaximum((int)currentVideo.getLength());
-		//when a valid current video is set, begin media progress checking
-		mPC = new MediaProgressChecker(this);
-		mPC.execute();
-	}
+		public void setCurrentVid(EmbeddedMediaPlayer vid, File vidFile){
+			currentVideo = vid;
+			mediaFile = vidFile;
+			pbP.setCurrentVideo(currentVideo);
+			vP.setCurrentVideo(currentVideo);
+			//media name is shown on text field to show what's playing
+			videoName.setText(vidFile.getName());
+			//set up of progress slider with media time length
+			mediaProgress.setMinimum(0);
+			mediaProgress.setMaximum((int)currentVideo.getLength());
+			//when a valid current video is set, begin media progress checking
+			mPC = new MediaProgressChecker(this);
+			mPC.execute();
+		}
 	//an additional button to easily open files
 	public void setOpenButton(JButton openButton) {
 		ImageIcon openFile = new ImageIcon(iconPath + "/open_button.gif");
@@ -180,6 +182,19 @@ public class MainPanel extends JPanel{
 	}
 	
 	//--------------------METHOD TO UPDATE GUI FROM OTHER CLASSES-----------------//
+	
+	//method to literally restart video that was playing, when it ends
+	public void restart() {
+		currentVideo.playMedia(mediaFile.getAbsolutePath());
+		while (true) {
+			if (currentVideo.isPlaying()) {
+				currentVideo.pause();
+				break;
+			}
+		}
+		setCurrentVid(currentVideo, mediaFile);
+		pbP.setToDefault();
+	}
 	
 	//method used by video progress checker to update progress bar of video
 	public void updateMediaProgress() {
