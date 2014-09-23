@@ -27,6 +27,7 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 	private JButton _generateButton;
 	private JButton _browseButton1;
 	private JButton _browseButton2;
+	private String _frameTitle;
 	String iconPath = "./icons";
 	
 	//computer screen dimensions
@@ -39,6 +40,7 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 		super(frameTitle);
 		
 		_selectedVidPath = mediaPath;
+		_frameTitle = frameTitle;
 		
 		//create image icon for browse file button
 		ImageIcon openFile = new ImageIcon(iconPath + "/open_button.gif");
@@ -163,9 +165,22 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 				}
 			}
 		} else if (e.getSource() == _generateButton){
+			//generate title page, or credit page depending on title of frame.
 			
-			TitleCreditGenerator generator = new TitleCreditGenerator(true, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath);
-			generator.execute();
+			//check that all fields are not blank.
+			if (_textArea.getText().length() == 0 || _textField1.getText().length() == 0 || _textField2.getText().length() == 0){
+				JOptionPane.showMessageDialog(this, "There are blank fields! Make sure text, music file, image file are specifed");
+			} else {
+				if (_frameTitle.equals("Create Title page(s)")){
+					//pass on true in the constructor to indicate title page generation
+					TitleCreditGenerator generator = new TitleCreditGenerator(true, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath);
+					generator.execute();
+				} else if (_frameTitle.equals("Create Credit page(s)")){
+					//pass on false in the constructor to indicate credit page generation
+					TitleCreditGenerator generator = new TitleCreditGenerator(false, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath);
+					generator.execute();
+				}
+			}
 		}
 		
 	}
