@@ -221,8 +221,8 @@ public class Menu extends JFrame implements ActionListener{
 				boolean isAudio = false;
 			
 				//bash command to 'grep' to verify file as media
-				String audCmd = "file " + _mediaFile.getAbsolutePath() + " | grep -i audio";
-				String vidCmd = "file " + _mediaFile.getAbsolutePath() + " | grep -i media";
+				String audCmd = "avconv -i " + _mediaFile.getAbsolutePath() + " 2>&1 | grep Audio:";
+				String vidCmd = "avconv -i " + _mediaFile.getAbsolutePath() + " 2>&1 | grep Video:";
 				
 				ProcessBuilder audCheckBuilder = new ProcessBuilder("/bin/bash","-c",audCmd);
 				ProcessBuilder vidCheckBuilder = new ProcessBuilder("/bin/bash","-c",vidCmd);
@@ -246,8 +246,15 @@ public class Menu extends JFrame implements ActionListener{
 				if (isVideo || isAudio) {
 					//current video is instantiated and paused immediately when it starts playing
 					currentVideo = ourMediaPlayer.getMediaPlayer();
-					currentVideo.startMedia(_mediaPath);
-					currentVideo.pause();
+					currentVideo.playMedia(_mediaPath);
+					while (true) {
+						if (currentVideo.isPlaying()) {
+							currentVideo.pause();
+							if (currentVideo.isPlayable()) {
+								break;
+							}
+						}
+					}
 					//video is set in the main panel
 					container.setCurrentVid(currentVideo,_mediaFile);
 					

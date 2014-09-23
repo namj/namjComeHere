@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.swing.SwingWorker;
 
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+
 public class MediaProgressChecker extends SwingWorker<Void,Void>{
 	private MainPanel main;
 	
@@ -14,12 +16,14 @@ public class MediaProgressChecker extends SwingWorker<Void,Void>{
 	
 	@Override
 	protected Void doInBackground() throws Exception {
+		EmbeddedMediaPlayer media = main.getMedia();
+		long length = media.getLength();
 		//after a media is opened, continuously checks for media progress
 		//when video is finish and not playable, restart
 		while (true) {
 			Thread.sleep(50);
 			publish();
-			if (main.getMedia().isPlayable() == false) {
+			if (media.isPlayable() == false && media.getTime() > length) {
 				main.restart();
 				break;
 			}
