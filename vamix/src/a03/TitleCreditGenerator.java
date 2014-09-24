@@ -189,7 +189,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 			//print output from terminal to console
 			while ((line = stdoutH.readLine()) != null) {
 				System.out.println(line);
-				publish("encoding main video... \nThis process may take a few minutes");
+				publish("<html>encoding main video...<br>This process may take a few minutes</html>");
 				//if cancel button has been pressed
 				if (_isCancelled){
 					//destroy process and return exit value
