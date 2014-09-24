@@ -8,6 +8,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.BufferedWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Logger {
 	
@@ -31,7 +34,7 @@ public class Logger {
 	
 	public void update(String text, String musicPath, String imagePath) throws IOException {
 		
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(_vamixFolder + "/editlog.txt", true)));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(_vamixFolder + "/editlog.txt", false)));
 		out.println(text);
 		out.println(musicPath);
 		out.println(imagePath);
@@ -100,5 +103,8 @@ public class Logger {
 		} 
 		return "";
 	}
-
+	
+	public void deleteLog() throws IOException{
+		Files.delete(Paths.get(_vamixFolder + "/editlog.txt"));
+	}
 }
