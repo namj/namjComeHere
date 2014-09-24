@@ -62,6 +62,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 		
 		int _indexOfBracket;
 		int _counter = 0;
+		String _resolution = "";
 		
 		//figure out the size of the main video to make video created from image the same size.
 		String cmdX = "avconv -i "+ _videoPath +" 2>&1 | grep -i video:";
@@ -82,8 +83,8 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 				i--;
 			}
 			//extract only the part which contains information about resolution.
-			String resolution = lineX.substring(_indexOfBracket - _counter - 2, _indexOfBracket -2);
-			System.out.println(resolution);;
+			_resolution = lineX.substring(_indexOfBracket - _counter - 1, _indexOfBracket -1);
+			System.out.println(_resolution);
 			
 			//if cancel button has been pressed
 			if (_isCancelled){
@@ -99,7 +100,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 		}
 		
 		//terminal command to build 10sec video from selected image
-		String cmd = "avconv -loop 1 -i "+ _imagePath +" -t 00:00:10 -r 24 -s 1920x1080 -y "+ _savePath +"/videoFromImage.mp4";
+		String cmd = "avconv -loop 1 -i "+ _imagePath +" -t 00:00:10 -r 24 -s "+_resolution+" -y "+ _savePath +"/videoFromImage.mp4";
 		ProcessBuilder Builder = new ProcessBuilder("/bin/bash","-c",cmd);
 		Builder.redirectErrorStream(true);
 		Process process = Builder.start();
