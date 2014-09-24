@@ -78,6 +78,7 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 		
 		this.add(_textField1 = new JTextField());
 		_textField1.setBounds(25, 160, 500, 20);
+		_textField1.setEditable(false);
 		
 		this.add(_browseButton1);
 		_browseButton1.setBounds(540 , 160 , 30, 30);
@@ -88,6 +89,7 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 		
 		this.add(_textField2 = new JTextField());
 		_textField2.setBounds(25,200,500,20);
+		_textField2.setEditable(false);
 		
 		this.add(_browseButton2);
 		_browseButton2.setBounds(540 , 200 , 30, 30);
