@@ -3,15 +3,20 @@ package a03;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.plaf.metal.MetalSliderUI;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
@@ -24,7 +29,9 @@ public class MainPanel extends JPanel{
 	private VolumePanel vP;
 	
 	private JSlider mediaProgress;
+	private JLabel videoTime;
 	private JTextField videoName;
+	private File mediaFile;
 	private EmbeddedMediaPlayer currentVideo;
 	private EmbeddedMediaPlayerComponent videoPlayer;
 	private MediaProgressChecker mPC;
@@ -45,8 +52,8 @@ public class MainPanel extends JPanel{
 		
 		//setup of media progress slider to keep track of media
 		mediaProgress = new JSlider();
-		mediaProgress.setSize(videoPlayer.getWidth(),20);
-		mediaProgress.setLocation(videoPlayer.getX(),770);
+		mediaProgress.setSize(videoPlayer.getWidth()-70,20);
+		mediaProgress.setLocation(videoPlayer.getX()+70,770);
 		mediaProgress.setValue(0);
 		mediaProgress.setBackground(Color.BLACK);
 		//modify default UI to remove progress knob of slider
@@ -77,14 +84,13 @@ public class MainPanel extends JPanel{
 			@Override
 			public void mousePressed(MouseEvent arg0) {	
 				if (mediaProgress.isEnabled()) {
+					currentVideo.pause();
 					//get mouse point
-					double point = mediaProgress.getMousePosition().getX()-7.9;
+					double point = mediaProgress.getMousePosition().getX();
 					//get ratio of slider value per pixel
-					double ratio = mediaProgress.getMaximum() / (mediaProgress.getWidth()-15.8);
-					//get the relative x position in the slider
-					double xRelative = point - mediaProgress.getX();
+					double ratio = mediaProgress.getMaximum() / (mediaProgress.getWidth()-8);
 					//get the value to be used for value/ time
-					double result = ratio * xRelative + mediaProgress.getMaximum()*0.001;
+					double result = ratio * point;
 					//set slider value, play video in time
 					mediaProgress.setValue((int)result);
 					currentVideo.setTime((long)result);
@@ -92,10 +98,20 @@ public class MainPanel extends JPanel{
 			}
 			@Override
 			public void mouseReleased(MouseEvent arg0) {	
+				if (mediaProgress.isEnabled()) {
+					currentVideo.play();
+				}
 			}			
 		});
 		mediaProgress.setEnabled(false);
 		add(mediaProgress);
+		
+		videoTime = new JLabel("  00:00:00");
+		videoTime.setOpaque(true);
+		videoTime.setBounds(videoPlayer.getX(), 770, 70, 20);
+		videoTime.setForeground(Color.WHITE);
+		videoTime.setBackground(Color.BLACK);
+		add(videoTime);
 		
 		//set up for text field to show what video/ audio is playing
 		videoName = new JTextField("Please open a media file...");
@@ -113,6 +129,7 @@ public class MainPanel extends JPanel{
 		
 		vP = new VolumePanel();
 		add(vP);
+		
 	}
 	
 	//-------------------------METHODS FOR FUNCTION ENABLITLIY------------------//
@@ -133,19 +150,20 @@ public class MainPanel extends JPanel{
 	//-----------------------METHODS TO SET UP COMPONENTS FROM OTHER CLASSES------------------//
 	
 	//method to set the current video (media)
-	public void setCurrentVid(EmbeddedMediaPlayer vid, File vidFile){
-		currentVideo = vid;
-		pbP.setCurrentVideo(currentVideo);
-		vP.setCurrentVideo(currentVideo);
-		//media name is shown on text field to show what's playing
-		videoName.setText(vidFile.getName());
-		//set up of progress slider with media time length
-		mediaProgress.setMinimum(0);
-		mediaProgress.setMaximum((int)currentVideo.getLength());
-		//when a valid current video is set, begin media progress checking
-		mPC = new MediaProgressChecker(this);
-		mPC.execute();
-	}
+		public void setCurrentVid(EmbeddedMediaPlayer vid, File vidFile){
+			currentVideo = vid;
+			mediaFile = vidFile;
+			pbP.setCurrentVideo(currentVideo);
+			vP.setCurrentVideo(currentVideo);
+			//media name is shown on text field to show what's playing
+			videoName.setText(vidFile.getName());
+			//set up of progress slider with media time length
+			mediaProgress.setMinimum(0);
+			mediaProgress.setMaximum((int)currentVideo.getLength());
+			//when a valid current video is set, begin media progress checking
+			mPC = new MediaProgressChecker(this);
+			mPC.execute();
+		}
 	//an additional button to easily open files
 	public void setOpenButton(JButton openButton) {
 		ImageIcon openFile = new ImageIcon(iconPath + "/open_button.gif");
@@ -161,17 +179,6 @@ public class MainPanel extends JPanel{
 		add(dlButton);
 	}
 	
-	//---------------------------METHODS TO REDUCE DUPLICATE CODING---------------//
-	//set up and return a button using only an image icon
-	private JButton setImageButton(ImageIcon img) {
-		JButton imgButton = new JButton(img);
-		imgButton.setOpaque(false);
-		imgButton.setContentAreaFilled(false);
-		imgButton.setBorderPainted(false);
-		imgButton.setFocusPainted(false);
-		return imgButton;
-	}
-	
 	//----------------------METHODS TO ACCESS PRIVATE OBJECTS-----------//
 	
 	//method to retrieve the current
@@ -181,8 +188,39 @@ public class MainPanel extends JPanel{
 	
 	//--------------------METHOD TO UPDATE GUI FROM OTHER CLASSES-----------------//
 	
+	//method to literally restart video that was playing, when it ends
+	public void restart() {
+		currentVideo.startMedia(mediaFile.getAbsolutePath());
+		currentVideo.pause();
+		setCurrentVid(currentVideo, mediaFile);
+		pbP.setToDefault();
+	}
+	
 	//method used by video progress checker to update progress bar of video
 	public void updateMediaProgress() {
 		mediaProgress.setValue((int)currentVideo.getTime());
+		String hs,ms,ss;
+		long time = currentVideo.getTime()/1000;
+		int hours = (int) time / 3600;
+	    int remainder = (int) time - hours * 3600;
+	    int mins = remainder / 60;
+	    remainder = remainder - mins * 60;
+	    int secs = remainder;
+	    if (hours < 10) {
+	    	hs = "0" + hours;
+	    } else {
+	    	hs = "" + hours;
+	    }
+	    if (mins < 10) {
+	    	ms = "0" + mins;
+	    } else {
+	    	ms = "" + mins;
+	    }
+	    if (secs < 10) {
+	    	ss = "0" + secs;
+	    } else {
+	    	ss = "" + secs;
+	    }
+	    videoTime.setText("   " + hs + ":" + ms + ":" + ss);
 	}
 }

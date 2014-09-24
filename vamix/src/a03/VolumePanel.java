@@ -36,7 +36,7 @@ public class VolumePanel extends JPanel implements MouseListener{
 		setLayout(null);
 		
 		//set up of volume slider
-		volumeSlider = new JSlider(0,100,0);
+		volumeSlider = new JSlider(0,100,50);
 		volumeSlider.setOpaque(false);
 		volumeSlider.setBounds(65, 15, 200, 10);
 		//does have ticks, every 10
@@ -139,7 +139,6 @@ public class VolumePanel extends JPanel implements MouseListener{
 	}
 	public void volumeOn() {
 		volumeSlider.setEnabled(true);
-		volumeSlider.setValue(currentVideo.getVolume());
 		volumeUp.setEnabled(true);
 		volumeDown.setEnabled(true);
 		muteButton.setEnabled(true);
