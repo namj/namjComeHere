@@ -22,18 +22,21 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 	private String _musicPath;
 	private String _imagePath;
 	private String _videoPath;
+	private String _savePath;
+	
 	private JFrame _frame;
 	private JLabel _progressText;
 	private JButton _cancelButton;
 	private boolean _isCancelled = false;
 	
 
-	public TitleCreditGenerator(boolean titleOrCredit, String text, String music, String image, String path){
+	public TitleCreditGenerator(boolean titleOrCredit, String text, String music, String image, String path, String savePath){
 		_titleOrCredit = titleOrCredit;
 		_text = text;
 		_musicPath = music;
 		_imagePath = image;
 		_videoPath = path;
+		_savePath = savePath;
 		
 		_frame = new JFrame();
 		_progressText = new JLabel("encoding...");
@@ -52,7 +55,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 	protected Integer doInBackground() throws Exception {
 		
 		//terminal command to build 10sec video from selected image
-		String cmd = "avconv -loop 1 -i "+ _imagePath +" -t 00:00:10 -r 24 -s 1920x1080 -y videoFromImage.mp4";
+		String cmd = "avconv -loop 1 -i "+ _imagePath +" -t 00:00:10 -r 24 -s 1920x1080 -y "+ _savePath +"/videoFromImage.mp4";
 		ProcessBuilder Builder = new ProcessBuilder("/bin/bash","-c",cmd);
 		Builder.redirectErrorStream(true);
 		Process process = Builder.start();
@@ -77,7 +80,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 		}
 		
 		//terminal command to add 10sec and music to the 10sec video
-		cmd = "avconv -i videoFromImage.mp4 -i "+ _musicPath +" -c:a copy -t 10 -vf \"drawtext=fontcolor=white:fontsize=30:fontfile=/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-L.ttf:text='"+ _text +"':x=30:y=h-text_h-30\" -y titleCreditPage.mp4";
+		cmd = "avconv -i videoFromImage.mp4 -i "+ _musicPath +" -c:a copy -t 10 -vf \"drawtext=fontcolor=white:fontsize=30:fontfile=/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-L.ttf:text='"+ _text +"':x=30:y=h-text_h-30\" -y "+ _savePath +"/titleCreditPage.mp4";
 		ProcessBuilder Builder2 = new ProcessBuilder("/bin/bash","-c",cmd);
 		Builder2.redirectErrorStream(true);
 		Process process2 = Builder2.start();
@@ -104,7 +107,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 		if (_titleOrCredit == true) {
 			
 			//terminal command to turn titlepage(openingscene) into .ts 
-			cmd = "avconv -i titleCreditPage.mp4 -vcodec libx264 -acodec aac -bsf:v h264_mp4toannexb -f mpegts -strict experimental -y file1.ts";
+			cmd = "avconv -i titleCreditPage.mp4 -vcodec libx264 -acodec aac -bsf:v h264_mp4toannexb -f mpegts -strict experimental -y "+ _savePath +"/file1.ts";
 			ProcessBuilder Builder3 = new ProcessBuilder("/bin/bash","-c",cmd);
 			Builder3.redirectErrorStream(true);
 			Process process3 = Builder3.start();
@@ -129,7 +132,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 			}
 			
 			//terminal command to turn main vid into .ts
-			cmd = "avconv -i "+ _videoPath +" -vcodec libx264 -acodec aac -bsf:v h264_mp4toannexb -f mpegts -strict experimental -y file2.ts";
+			cmd = "avconv -i "+ _videoPath +" -vcodec libx264 -acodec aac -bsf:v h264_mp4toannexb -f mpegts -strict experimental -y "+ _savePath +"/file2.ts";
 			ProcessBuilder Builder4 = new ProcessBuilder("/bin/bash","-c",cmd);
 			Builder4.redirectErrorStream(true);
 			Process process4 = Builder4.start();
@@ -154,7 +157,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 			}
 			
 			//terminal command to concat the 2 .ts files and turn into mp4.
-			cmd = "avconv -i concat:file1.ts\\|file2.ts -c copy -bsf:a aac_adtstoasc -y Out.mp4";
+			cmd = "avconv -i concat:file1.ts\\|file2.ts -c copy -bsf:a aac_adtstoasc -y "+ _savePath +"/Out.mp4";
 			ProcessBuilder Builder5 = new ProcessBuilder("/bin/bash","-c",cmd);
 			Builder5.redirectErrorStream(true);
 			Process process5 = Builder5.start();
@@ -181,7 +184,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 		} else {
 			
 			//terminal command to turn titlepage(openingscene) into .ts 
-			cmd = "avconv -i titleCreditPage.mp4 -vcodec libx264 -acodec aac -bsf:v h264_mp4toannexb -f mpegts -strict experimental -y file3.ts";
+			cmd = "avconv -i titleCreditPage.mp4 -vcodec libx264 -acodec aac -bsf:v h264_mp4toannexb -f mpegts -strict experimental -y "+ _savePath +"/file3.ts";
 			ProcessBuilder Builder3 = new ProcessBuilder("/bin/bash","-c",cmd);
 			Builder3.redirectErrorStream(true);
 			Process process3 = Builder3.start();
@@ -206,7 +209,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 			}
 			
 			//terminal command to turn main vid into .ts
-			cmd = "avconv -i "+ _videoPath +" -vcodec libx264 -acodec aac -bsf:v h264_mp4toannexb -f mpegts -strict experimental -y file2.ts";
+			cmd = "avconv -i "+ _videoPath +" -vcodec libx264 -acodec aac -bsf:v h264_mp4toannexb -f mpegts -strict experimental -y "+ _savePath +"/file2.ts";
 			ProcessBuilder Builder4 = new ProcessBuilder("/bin/bash","-c",cmd);
 			Builder4.redirectErrorStream(true);
 			Process process4 = Builder4.start();
@@ -231,7 +234,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 			}
 			
 			//terminal command to concat the 2 .ts files and turn into mp4.
-			cmd = "avconv -i concat:file2.ts\\|file3.ts -c copy -bsf:a aac_adtstoasc -y Out.mp4";
+			cmd = "avconv -i concat:file2.ts\\|file3.ts -c copy -bsf:a aac_adtstoasc -y "+ _savePath +"/Out.mp4";
 			ProcessBuilder Builder5 = new ProcessBuilder("/bin/bash","-c",cmd);
 			Builder5.redirectErrorStream(true);
 			Process process5 = Builder5.start();

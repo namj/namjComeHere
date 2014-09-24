@@ -64,6 +64,7 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 		setSize(600,350);
 		setLayout(null);
 		setLocation((_screenWidth-600)/2,(_screenHeight-350)/2);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		//add components to this frame
 		this.add(_label1 = new JLabel("Enter text"));
@@ -171,14 +172,24 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 			if (_textArea.getText().length() == 0 || _textField1.getText().length() == 0 || _textField2.getText().length() == 0){
 				JOptionPane.showMessageDialog(this, "There are blank fields! Make sure text, music file, image file are specifed");
 			} else {
-				if (_frameTitle.equals("Create Title page(s)")){
-					//pass on true in the constructor to indicate title page generation
-					TitleCreditGenerator generator = new TitleCreditGenerator(true, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath);
-					generator.execute();
-				} else if (_frameTitle.equals("Create Credit page(s)")){
-					//pass on false in the constructor to indicate credit page generation
-					TitleCreditGenerator generator = new TitleCreditGenerator(false, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath);
-					generator.execute();
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setDialogTitle("Select directory to save video to");
+				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int result = fileChooser.showOpenDialog(this);
+				if (result == JFileChooser.APPROVE_OPTION){	
+					//store path of directory to save it to
+					String savePath = fileChooser.getSelectedFile().getAbsolutePath();
+					System.out.println(savePath);
+			
+					if (_frameTitle.equals("Create Title page(s)")){
+						//pass on true in the constructor to indicate title page generation
+						TitleCreditGenerator generator = new TitleCreditGenerator(true, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath, savePath);
+						generator.execute();
+					} else if (_frameTitle.equals("Create Credit page(s)")){
+						//pass on false in the constructor to indicate credit page generation
+						TitleCreditGenerator generator = new TitleCreditGenerator(false, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath, savePath);
+						generator.execute();
+					}
 				}
 			}
 		}
