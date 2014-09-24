@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -344,6 +346,16 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 		
 		//close progress frame;
 		_frame.dispose();
+		try {
+			Files.deleteIfExists(Paths.get(_savePath + "/file1.ts"));
+			Files.deleteIfExists(Paths.get(_savePath + "/file2.ts"));
+			Files.deleteIfExists(Paths.get(_savePath + "/file3.ts"));
+			Files.deleteIfExists(Paths.get(_savePath + "/titleCreditPage.mp4"));
+			Files.deleteIfExists(Paths.get(_savePath + "/videoFromImage.mp4"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
