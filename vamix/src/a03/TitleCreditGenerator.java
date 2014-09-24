@@ -60,6 +60,44 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 	@Override
 	protected Integer doInBackground() throws Exception {
 		
+		int _indexOfBracket;
+		int _counter = 0;
+		
+		//figure out the size of the main video to make video created from image the same size.
+		String cmdX = "avconv -i "+ _videoPath +" 2>&1 | grep -i video:";
+		ProcessBuilder BuilderX = new ProcessBuilder("/bin/bash","-c",cmdX);
+		BuilderX.redirectErrorStream(true);
+		Process processX = BuilderX.start();
+		InputStream stdoutX = processX.getInputStream();
+		BufferedReader stdoutY = new BufferedReader(new InputStreamReader(stdoutX));
+		String lineX = null;
+		//print output from terminal to console
+		while ((lineX = stdoutY.readLine()) != null) {
+			System.out.println(lineX);
+			publish("Obtaining video resolution...");
+			_indexOfBracket = lineX.indexOf('[');
+			int i = _indexOfBracket -2 ;
+			while (Character.isDigit(lineX.charAt(i)) || lineX.charAt(i) == 'x') {
+				_counter = _counter + 1;
+				i--;
+			}
+			//extract only the part which contains information about resolution.
+			String resolution = lineX.substring(_indexOfBracket - _counter - 2, _indexOfBracket -2);
+			System.out.println(resolution);;
+			
+			//if cancel button has been pressed
+			if (_isCancelled){
+				//destroy process and return exit value
+				processX.destroy();
+				int exitValue = processX.waitFor();
+				return exitValue;
+			}
+		}
+		
+		if (processX.waitFor() != 0){
+			return processX.waitFor();
+		}
+		
 		//terminal command to build 10sec video from selected image
 		String cmd = "avconv -loop 1 -i "+ _imagePath +" -t 00:00:10 -r 24 -s 1920x1080 -y "+ _savePath +"/videoFromImage.mp4";
 		ProcessBuilder Builder = new ProcessBuilder("/bin/bash","-c",cmd);
