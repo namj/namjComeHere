@@ -62,7 +62,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 		
 		int _indexOfBracket;
 		int _counter = 0;
-		String _resolution = "";
+		String _resolution = null;
 		
 		//figure out the size of the main video to make video created from image the same size.
 		String cmdX = "avconv -i "+ _videoPath +" 2>&1 | grep -i video:";
@@ -314,24 +314,23 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 			//if background work finished peacefully
 			if (this.get() == 0) {
 				JOptionPane.showMessageDialog(null,"Done!");
-				//if user decides to save session
-				if (JOptionPane.showConfirmDialog(null, "would you like to save your last(this) session?") == JOptionPane.OK_OPTION){
-					try {
-						Logger.getInstance().update(_text, _musicPath, _imagePath);
-						JOptionPane.showMessageDialog(null,"Saved");
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				
-				
 			} else {
 				JOptionPane.showMessageDialog(null,"Error!");
 			}
 		} catch (InterruptedException | ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		//if user decides to save session
+		if (JOptionPane.showConfirmDialog(null, "would you like to save your last(this) session?") == JOptionPane.OK_OPTION){
+			try {
+				Logger.getInstance().update(_text, _musicPath, _imagePath);
+				JOptionPane.showMessageDialog(null,"Saved");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		//close progress frame;
