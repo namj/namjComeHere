@@ -25,6 +25,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 	private JFrame _frame;
 	private JLabel _progressText;
 	private JButton _cancelButton;
+	private boolean _isCancelled = false;
 	
 
 	public TitleCreditGenerator(boolean titleOrCredit, String text, String music, String image, String path){
@@ -63,7 +64,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 			System.out.println(line);
 			publish("Creating video from image...");
 			//if cancel button has been pressed
-			if (isCancelled()){
+			if (_isCancelled){
 				//destroy process and return exit value
 				process.destroy();
 				int exitValue = process.waitFor();
@@ -88,7 +89,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 			System.out.println(line);
 			publish("adding music and text to video...");
 			//if cancel button has been pressed
-			if (isCancelled()){
+			if (_isCancelled){
 				//destroy process and return exit value
 				process2.destroy();
 				int exitValue = process2.waitFor();
@@ -115,7 +116,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 				System.out.println(line);
 				publish("encoding title page(s)...");
 				//if cancel button has been pressed
-				if (isCancelled()){
+				if (_isCancelled){
 					//destroy process and return exit value
 					process3.destroy();
 					int exitValue = process3.waitFor();
@@ -140,7 +141,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 				System.out.println(line);
 				publish("encoding main video... \nThis process may take a few minutes");
 				//if cancel button has been pressed
-				if (isCancelled()){
+				if (_isCancelled){
 					//destroy process and return exit value
 					process4.destroy();
 					int exitValue = process4.waitFor();
@@ -165,7 +166,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 				System.out.println(line);
 				publish("adding title page to video...");
 				//if cancel button has been pressed
-				if (isCancelled()){
+				if (_isCancelled){
 					//destroy process and return exit value
 					process5.destroy();
 					int exitValue = process5.waitFor();
@@ -192,7 +193,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 				System.out.println(line);
 				publish("encoding credit page(s)...");
 				//if cancel button has been pressed
-				if (isCancelled()){
+				if (_isCancelled){
 					//destroy process and return exit value
 					process3.destroy();
 					int exitValue = process3.waitFor();
@@ -217,7 +218,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 				System.out.println(line);
 				publish("encoding main video... This process may take a few minutes");
 				//if cancel button has been pressed
-				if (isCancelled()){
+				if (_isCancelled){
 					//destroy process and return exit value
 					process4.destroy();
 					int exitValue = process4.waitFor();
@@ -242,7 +243,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 				System.out.println(line);
 				publish("adding credit page to video...");
 				//if cancel button has been pressed
-				if (isCancelled()){
+				if (_isCancelled){
 					//destroy process and return exit value
 					process5.destroy();
 					int exitValue = process5.waitFor();
@@ -262,6 +263,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 	protected void done() {
 		
 		try {
+			//if background work finished peacefully
 			if (this.get() == 0) {
 				JOptionPane.showMessageDialog(null,"Done!");
 			} else {
@@ -276,7 +278,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 	
 	@Override
 	protected void process(List<String> chunks) {
-		
+		//update progress frame/text
 		for (int i = 0 ; i < chunks.size() ; i ++ )
 		_progressText.setText(chunks.get(i));
 		
@@ -285,7 +287,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == _cancelButton){
-			this.cancel(true);
+			_isCancelled = true;
 		}
 		
 	}
