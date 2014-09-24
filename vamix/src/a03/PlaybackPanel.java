@@ -194,12 +194,12 @@ public class PlaybackPanel extends JPanel implements MouseListener{
 		fbButton.setEnabled(true);
 	}
 	//method to set play button for "Play"
-	private void setToPlay() {
+	public void setToPlay() {
 		playButton.setIcon(iconPlay);
 		isPaused = true;
 	}
 	//method to set play button for "Pause"
-	private void setToPause() {
+	public void setToPause() {
 		playButton.setIcon(iconPause);
 		isPaused = false;
 	}
