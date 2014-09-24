@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -273,6 +274,17 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 			//if background work finished peacefully
 			if (this.get() == 0) {
 				JOptionPane.showMessageDialog(null,"Done!");
+				//if user decides to save session
+				if (JOptionPane.showConfirmDialog(null, "would you like to save your last(this) session?") == JOptionPane.OK_OPTION){
+					try {
+						Logger.getInstance().update(_text, _musicPath, _imagePath);
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				
 			} else {
 				JOptionPane.showMessageDialog(null,"Error!");
 			}
