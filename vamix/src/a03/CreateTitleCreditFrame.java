@@ -72,12 +72,14 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 		
 		this.add(_textArea = new JTextArea());
 		_textArea.setBounds(25, 30, 550, 100);
+		_textArea.setText(Logger.getInstance().pullText());
 		
 		this.add(_label2 = new JLabel("Select music"));
 		_label2.setBounds(25, 140, 200, 20);
 		
 		this.add(_textField1 = new JTextField());
 		_textField1.setBounds(25, 160, 500, 20);
+		_textField1.setText(Logger.getInstance().pullMusicPath());
 		_textField1.setEditable(false);
 		
 		this.add(_browseButton1);
@@ -89,6 +91,7 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 		
 		this.add(_textField2 = new JTextField());
 		_textField2.setBounds(25,200,500,20);
+		_textField2.setText(Logger.getInstance().pullImagePath());
 		_textField2.setEditable(false);
 		
 		this.add(_browseButton2);

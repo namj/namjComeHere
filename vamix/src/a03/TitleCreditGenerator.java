@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -278,7 +279,8 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 				if (JOptionPane.showConfirmDialog(null, "would you like to save your last(this) session?") == JOptionPane.OK_OPTION){
 					try {
 						Logger.getInstance().update(_text, _musicPath, _imagePath);
-					} catch (FileNotFoundException e) {
+						JOptionPane.showMessageDialog(null,"Saved");
+					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -292,6 +294,9 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		//close progress frame;
+		_frame.dispose();
 		
 	}
 	

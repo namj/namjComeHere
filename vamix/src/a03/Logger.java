@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.BufferedWriter;
 
 public class Logger {
 	
@@ -27,12 +29,13 @@ public class Logger {
 		return instance;
 	}
 	
-	public void update(String text, String musicPath, String imagePath) throws FileNotFoundException {
+	public void update(String text, String musicPath, String imagePath) throws IOException {
 		
-		PrintWriter writer = new PrintWriter(new File(_vamixFolder + "/editlog.txt"));
-		writer.print(text);
-		writer.print(musicPath);
-		writer.print(imagePath);
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(_vamixFolder + "/editlog.txt", true)));
+		out.println(text);
+		out.println(musicPath);
+		out.println(imagePath);
+		out.close();
 		
 	}
 	
@@ -46,6 +49,7 @@ public class Logger {
 				in = new BufferedReader(new FileReader(_vamixFolder + "/editlog.txt"));
 				//the first line should contain the text
 				String line = in.readLine();
+				in.close();
 				return line;
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -66,6 +70,7 @@ public class Logger {
 				//the second line should contain the path
 				String line = in.readLine();
 				line = in.readLine();
+				in.close();
 				return line;
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -76,23 +81,24 @@ public class Logger {
 	}
 	
 	//this method should return the path of image file last used. ie third line of edit log file
-		public String pullImagePath(){
-			//check if log file exists
-			if (new File(_vamixFolder + "/editlog.txt").exists()){
-				BufferedReader in;
-				try {
-					in = new BufferedReader(new FileReader(_vamixFolder + "/editlog.txt"));
-					//the second line should contain the path
-					String line = in.readLine();
-					line = in.readLine();
-					line = in.readLine();
-					return line;
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			} 
-			return "";
-		}
+	public String pullImagePath(){
+		//check if log file exists
+		if (new File(_vamixFolder + "/editlog.txt").exists()){
+			BufferedReader in;
+			try {
+				in = new BufferedReader(new FileReader(_vamixFolder + "/editlog.txt"));
+				//the third line should contain the path
+				String line = in.readLine();
+				line = in.readLine();
+				line = in.readLine();
+				in.close();
+				return line;
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} 
+		return "";
+	}
 
 }
