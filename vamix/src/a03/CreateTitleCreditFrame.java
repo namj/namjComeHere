@@ -207,7 +207,7 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 				String imgCmd = "file " + _mediaFile.getAbsolutePath() + " | grep -i image";
 				ProcessBuilder imgCheckBuilder = new ProcessBuilder("/bin/bash","-c", imgCmd);
 				try {
-					//process run
+					//process runthrows IOException
 					Process imgCheck = imgCheckBuilder.start();
 					int imgTerm = imgCheck.waitFor();
 					//a correct termination indicates it is a media file
@@ -272,9 +272,8 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 			if (_textField1.getText().length() != 0 && _textField2.getText().length() != 0){
 				Previewer viewer = new Previewer();
 				try {
-					System.out.println("huh?");
-					viewer.view(_textField2.getText(), "500x500");
-				} catch (IOException e1) {
+					viewer.view(_textArea.getText(), _textField1.getText(),_textField2.getText(), "1024x768", _font.getSelectedItem().toString(), _textSize.getSelectedItem().toString(), _colour.getSelectedItem().toString());
+				} catch (IOException | InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
