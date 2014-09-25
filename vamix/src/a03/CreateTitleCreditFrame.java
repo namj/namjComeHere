@@ -218,23 +218,45 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 			} else {
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setDialogTitle("Select directory to save video to");
-				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				int result = fileChooser.showOpenDialog(this);
+				//fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int result = fileChooser.showSaveDialog(this);
 				if (result == JFileChooser.APPROVE_OPTION){	
 					//store path of directory to save it to
-					String savePath = fileChooser.getSelectedFile().getAbsolutePath();
+					String savePath = fileChooser.getCurrentDirectory().getAbsolutePath();
+					String outputPathName = fileChooser.getSelectedFile().toString();
+					
 					System.out.println(savePath);
-			
-					if (_frameTitle.equals("Create Title page(s)")){
-						//pass on true in the constructor to indicate title page generation
-						//TitleCreditGenerator generator = new TitleCreditGenerator(true, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath, savePath, _font.getSelectedItem(), _textSize.getSelectedItem(), _colour.getSelectedItem());
-						TitleCreditGenerator generator = new TitleCreditGenerator(true, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath, savePath, _font, _textSize, _colour);
-						generator.execute();
-					} else if (_frameTitle.equals("Create Credit page(s)")){
-						//pass on false in the constructor to indicate credit page generation
-						//TitleCreditGenerator generator = new TitleCreditGenerator(false, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath, savePath,_font.getSelectedItem(), _textSize.getSelectedItem(), _colour.getSelectedItem());
-						TitleCreditGenerator generator = new TitleCreditGenerator(true, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath, savePath, _font, _textSize, _colour);
-						generator.execute();
+					System.out.println(outputPathName);
+					
+					File out = new File(outputPathName);
+					boolean cancelled = false;
+					while (out.exists()){
+						int result2 = JOptionPane.showConfirmDialog(null, "file already exists. Would you like to overwrite?", "", 0);
+						if (result2 == JOptionPane.YES_OPTION){
+							break;
+						} else {
+							int result3 = fileChooser.showSaveDialog(this);
+							if (result3 == JFileChooser.APPROVE_OPTION){	
+								//store path of directory to save it to
+								outputPathName = fileChooser.getSelectedFile().toString();								
+								out = new File(outputPathName);
+							} else if (result3 == JFileChooser.CANCEL_OPTION){
+								cancelled = true;
+								break;
+							}
+						}
+					}
+					
+					if (cancelled == false){
+						if (_frameTitle.equals("Create Title page(s)")){
+							//pass on true in the constructor to indicate title page generation
+							TitleCreditGenerator generator = new TitleCreditGenerator(true, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath, savePath, outputPathName, _font, _textSize, _colour);
+							generator.execute();
+						} else if (_frameTitle.equals("Create Credit page(s)")){
+							//pass on false in the constructor to indicate credit page generation
+							TitleCreditGenerator generator = new TitleCreditGenerator(true, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath, savePath, outputPathName, _font, _textSize, _colour);
+							generator.execute();
+						}
 					}
 				}
 			}

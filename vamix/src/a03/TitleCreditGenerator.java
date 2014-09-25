@@ -29,6 +29,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 	private String _imagePath; //path to image to make short video out of
 	private String _videoPath; //path to main video
 	private String _savePath; //path to save videos to
+	private String _outputPathName; //path of outputfile and its name
 	
 	private JFrame _frame;
 	private JLabel _progressText;
@@ -44,13 +45,14 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 	
 
 	//constructor for this swingworker
-	public TitleCreditGenerator(boolean titleOrCredit, String text, String music, String image, String path, String savePath, JComboBox font, JComboBox size, JComboBox colour){
+	public TitleCreditGenerator(boolean titleOrCredit, String text, String music, String image, String path, String savePath, String outputPathName, JComboBox font, JComboBox size, JComboBox colour){
 		_titleOrCredit = titleOrCredit;
 		_text = text;
 		_musicPath = music;
 		_imagePath = image;
 		_videoPath = path;
 		_savePath = savePath;
+		_outputPathName = outputPathName;
 		_font = font.getSelectedItem().toString();
 		_fontIndex = font.getSelectedIndex();
 		_textSize = size.getSelectedItem().toString();
@@ -218,7 +220,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 			}
 			
 			//terminal command to concat the 2 .ts files and turn into mp4.
-			cmd = "avconv -i concat:"+ _savePath +"/file1.ts\\|"+ _savePath +"/file2.ts -c copy -bsf:a aac_adtstoasc -y "+ _savePath +"/Out.mp4";
+			cmd = "avconv -i concat:"+ _savePath +"/file1.ts\\|"+ _savePath +"/file2.ts -c copy -bsf:a aac_adtstoasc -y "+ _outputPathName +".mp4";
 			ProcessBuilder Builder5 = new ProcessBuilder("/bin/bash","-c",cmd);
 			Builder5.redirectErrorStream(true);
 			Process process5 = Builder5.start();
@@ -295,7 +297,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 			}
 			
 			//terminal command to concat the 2 .ts files and turn into mp4.
-			cmd = "avconv -i concat:"+ _savePath +"/file2.ts\\|"+ _savePath +"/file3.ts -c copy -bsf:a aac_adtstoasc -y "+ _savePath +"/Out.mp4";
+			cmd = "avconv -i concat:"+ _savePath +"/file2.ts\\|"+ _savePath +"/file3.ts -c copy -bsf:a aac_adtstoasc -y "+ _outputPathName +".mp4";
 			ProcessBuilder Builder5 = new ProcessBuilder("/bin/bash","-c",cmd);
 			Builder5.redirectErrorStream(true);
 			Process process5 = Builder5.start();

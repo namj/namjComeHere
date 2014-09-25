@@ -180,8 +180,8 @@ public class Logger {
 	
 	//method that deletes edit log file
 	public void deleteLog() throws IOException{
-		Files.delete(Paths.get(_vamixFolder + "/editlog.txt"));
-		Files.delete(Paths.get(_vamixFolder + "/textlog.txt"));
+		Files.deleteIfExists(Paths.get(_vamixFolder + "/editlog.txt"));
+		Files.deleteIfExists(Paths.get(_vamixFolder + "/textlog.txt"));
 	}
 	
 }
