@@ -2,16 +2,10 @@ package a03;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,6 +16,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+
+/**
+ * This is a class which extend JFrame. It contains text-fields, 
+ * buttons that leads user to file navigator, ComboBoxes,
+ * everything that user needs to create a title or credit page 
+ * which will be joined to a main video.
+ * 
+ * @author Namjun Park (npar350) Andy Choi (mcho588)
+ *
+ */
 
 public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 
@@ -225,11 +230,9 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 					String savePath = fileChooser.getCurrentDirectory().getAbsolutePath();
 					String outputPathName = fileChooser.getSelectedFile().toString();
 					
-					System.out.println(savePath);
-					System.out.println(outputPathName);
-					
 					File out = new File(outputPathName);
 					boolean cancelled = false;
+					//if output name specified exists loop until user selects to overwrite or exits filechooser
 					while (out.exists()){
 						int result2 = JOptionPane.showConfirmDialog(null, "file already exists. Would you like to overwrite?", "", 0);
 						if (result2 == JOptionPane.YES_OPTION){
@@ -246,7 +249,7 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 							}
 						}
 					}
-					
+					//only initialise and execute swingworker is filechooser has exited without being deliberately exited/cancelled
 					if (cancelled == false){
 						if (_frameTitle.equals("Create Title page(s)")){
 							//pass on true in the constructor to indicate title page generation

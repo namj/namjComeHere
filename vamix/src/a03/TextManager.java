@@ -4,6 +4,14 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
+/**
+ * This class extends PlainDocument. Its role is to restrict
+ * the amount of text to be written in a text area.
+ * 
+ * @author Namjun Park (npar350) Andy Choi (mcho588)
+ *
+ */
+
 public class TextManager extends PlainDocument {
 
 	//variable that will contain max number of characters.

@@ -14,6 +14,15 @@ import java.nio.file.Paths;
 
 import javax.swing.JTextArea;
 
+/**
+ * This class handles everything there is to do with logging.
+ * It updates the log files on request and deletes them as well.
+ * log files are used to save text editing session
+ * 
+ * @author Namjun Park (npar350) Andy Choi (mcho588)
+ *
+ */
+
 public class Logger {
 	
 	//declare/initialise components
@@ -34,8 +43,10 @@ public class Logger {
 		return instance;
 	}
 	
+	//function which saves editing session by updating log files.
 	public void update(String text, String musicPath, String imagePath, int fontCombo, int sizeCombo, int colourCombo) throws IOException {
 		
+		//update edit log file
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(_vamixFolder + "/editlog.txt", false)));
 		out.println(musicPath);
 		out.println(imagePath);
@@ -44,6 +55,7 @@ public class Logger {
 		out.println(colourCombo);
 		out.close();
 		
+		//update textlog
 		PrintWriter out2 = new PrintWriter(new BufferedWriter(new FileWriter(_vamixFolder + "/textlog.txt", false)));
 		out2.println(text);
 		out2.close();
@@ -53,6 +65,7 @@ public class Logger {
 	//this method should return the text, ie first line of editlog file
 	public void pullText(JTextArea text){
 		
+		//if textlog exists, write its contents to the textArea.
 		if (new File(_vamixFolder + "/textlog.txt").exists()){
 			BufferedReader in;
 			try {
@@ -178,7 +191,7 @@ public class Logger {
 		return 0;
 	}
 	
-	//method that deletes edit log file
+	//method that deletes editlog and  textlog if they exist.
 	public void deleteLog() throws IOException{
 		Files.deleteIfExists(Paths.get(_vamixFolder + "/editlog.txt"));
 		Files.deleteIfExists(Paths.get(_vamixFolder + "/textlog.txt"));

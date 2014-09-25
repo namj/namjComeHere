@@ -21,6 +21,20 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+/**
+ * This class extends swingworker. This class processes all the avconv commands that take 
+ * a long time. The avconv commands (processes) are those that:
+ * 1 - figure out dimension of main vid, 
+ * 2 - create a 10sec video from a single image,
+ * 3 - apply music and text to it
+ * 4 - encode title/credit page
+ * 5 - encode main vid
+ * 6 - concat the encoded files and produce mp4.
+ *  
+ * @author Namjun Park (npar350) Andy Choi (mcho588)
+ *
+ */
+
 public class TitleCreditGenerator extends SwingWorker<Integer, String> implements ActionListener {
 	
 	private boolean _titleOrCredit; // true indicates title, false indicates credit
@@ -332,8 +346,10 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 			//if background work finished peacefully
 			if (this.get() == 0) {
 				JOptionPane.showMessageDialog(null,"Done!");
+			} else if (_isCancelled) {
+				JOptionPane.showMessageDialog(null, "Cancelled");
 			} else {
-				JOptionPane.showMessageDialog(null,"Error!");
+				JOptionPane.showMessageDialog(null,"Error! (Exit Status:"+this.get()+")");
 			}
 		} catch (InterruptedException | ExecutionException e) {
 			// TODO Auto-generated catch block
@@ -366,8 +382,8 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 			Files.deleteIfExists(Paths.get(_savePath + "/file1.ts"));
 			Files.deleteIfExists(Paths.get(_savePath + "/file2.ts"));
 			Files.deleteIfExists(Paths.get(_savePath + "/file3.ts"));
-			//Files.deleteIfExists(Paths.get(_savePath + "/titleCreditPage.mp4"));
-			//Files.deleteIfExists(Paths.get(_savePath + "/videoFromImage.mp4"));
+			Files.deleteIfExists(Paths.get(_savePath + "/titleCreditPage.mp4"));
+			Files.deleteIfExists(Paths.get(_savePath + "/videoFromImage.mp4"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
