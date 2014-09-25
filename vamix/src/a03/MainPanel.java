@@ -85,21 +85,27 @@ public class MainPanel extends JPanel{
 			public void mousePressed(MouseEvent arg0) {	
 				if (mediaProgress.isEnabled()) {
 					currentVideo.pause();
-					//get mouse point
-					double point = mediaProgress.getMousePosition().getX();
-					//get ratio of slider value per pixel
-					double ratio = mediaProgress.getMaximum() / (mediaProgress.getWidth()-8);
-					//get the value to be used for value/ time
-					double result = ratio * point;
-					//set slider value, play video in time
-					mediaProgress.setValue((int)result);
-					currentVideo.setTime((long)result);
+					
 				}
 			}
 			@Override
 			public void mouseReleased(MouseEvent arg0) {	
 				if (mediaProgress.isEnabled()) {
+					try {
+						//get mouse point
+						double point = mediaProgress.getMousePosition().getX();
+						//get ratio of slider value per pixel
+						double ratio = mediaProgress.getMaximum() / (mediaProgress.getWidth()-8);
+						//get the value to be used for value/ time
+						double result = ratio * point;
+						//set slider value, play video in time
+						mediaProgress.setValue((int)result);
+						currentVideo.setTime((long)result);
+					} catch (NullPointerException e) {
+						//do nothing
+					}
 					currentVideo.play();
+					pbP.setToPause();
 				}
 			}			
 		});

@@ -53,7 +53,7 @@ public class Downloader extends SwingWorker<Integer,String[]> {
 				int sB1 = line.indexOf('[');
 				int sB2 = line.indexOf(']');
 				String fileType = line.substring(sB1+1, sB2);
-				if (fileType.contains("mpeg")) {
+				if (fileType.contains("video") || fileType.contains("audio")) {
 					int rB1 = line.indexOf('(');
 					int rB2 = line.indexOf(')');
 					String size = line.substring(rB1+1, rB2);
