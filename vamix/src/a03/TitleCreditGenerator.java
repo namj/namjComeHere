@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -35,21 +36,27 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 	private boolean _isCancelled = false;
 	
 	private String _font;
+	private int _fontIndex;
 	private String _textSize;
+	private int _sizeIndex;
 	private String _colour;
+	private int _colourIndex;
 	
 
 	//constructor for this swingworker
-	public TitleCreditGenerator(boolean titleOrCredit, String text, String music, String image, String path, String savePath, Object font, Object size, Object colour){
+	public TitleCreditGenerator(boolean titleOrCredit, String text, String music, String image, String path, String savePath, JComboBox font, JComboBox size, JComboBox colour){
 		_titleOrCredit = titleOrCredit;
 		_text = text;
 		_musicPath = music;
 		_imagePath = image;
 		_videoPath = path;
 		_savePath = savePath;
-		_font = font.toString();
-		_textSize = size.toString();
-		_colour = colour.toString();
+		_font = font.getSelectedItem().toString();
+		_fontIndex = font.getSelectedIndex();
+		_textSize = size.getSelectedItem().toString();
+		_sizeIndex = size.getSelectedIndex();
+		_colour = colour.getSelectedItem().toString();
+		_colourIndex = colour.getSelectedIndex();
 		
 		_frame = new JFrame();
 		_progressText = new JLabel("encoding...");
@@ -335,7 +342,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 		int result = JOptionPane.showConfirmDialog(null, "would you like to save your last(this) session?");
 		if (result == JOptionPane.OK_OPTION){
 			try {
-				Logger.getInstance().update(_text, _musicPath, _imagePath);
+				Logger.getInstance().update(_text, _musicPath, _imagePath, _fontIndex, _sizeIndex, _colourIndex);
 				JOptionPane.showMessageDialog(null,"Saved");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

@@ -98,17 +98,19 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 		
 		this.add(_font);
 		_font.setBounds(65, 140, 150, 30);
+		_font.setSelectedIndex(Logger.getInstance().pullFontIndex());
 		this.add(_labelFont = new JLabel("font"));
 		_labelFont.setBounds(30, 140, 60, 30);
 		
-		
 		this.add(_textSize);
 		_textSize.setBounds(280, 140, 100, 30);
+		_textSize.setSelectedIndex(Logger.getInstance().pullSizeIndex());
 		this.add(_labelSize = new JLabel("Size"));
 		_labelSize.setBounds(245, 140, 60, 30);
 		
 		this.add(_colour);
 		_colour.setBounds(470, 140, 100, 30);
+		_colour.setSelectedIndex(Logger.getInstance().pullColourIndex());
 		this.add(_labelColour = new JLabel("Colour"));
 		_labelColour.setBounds(420, 140, 60, 30);
 		
@@ -210,7 +212,6 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 			}
 		} else if (e.getSource() == _generateButton){
 			//generate title page, or credit page depending on title of frame.
-			
 			//check that all fields are not blank.
 			if (_textArea.getText().length() == 0 || _textField1.getText().length() == 0 || _textField2.getText().length() == 0){
 				JOptionPane.showMessageDialog(this, "There are blank fields! Make sure text, music file, image file are specifed");
@@ -226,11 +227,13 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 			
 					if (_frameTitle.equals("Create Title page(s)")){
 						//pass on true in the constructor to indicate title page generation
-						TitleCreditGenerator generator = new TitleCreditGenerator(true, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath, savePath, _font.getSelectedItem(), _textSize.getSelectedItem(), _colour.getSelectedItem());
+						//TitleCreditGenerator generator = new TitleCreditGenerator(true, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath, savePath, _font.getSelectedItem(), _textSize.getSelectedItem(), _colour.getSelectedItem());
+						TitleCreditGenerator generator = new TitleCreditGenerator(true, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath, savePath, _font, _textSize, _colour);
 						generator.execute();
 					} else if (_frameTitle.equals("Create Credit page(s)")){
 						//pass on false in the constructor to indicate credit page generation
-						TitleCreditGenerator generator = new TitleCreditGenerator(false, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath, savePath,_font.getSelectedItem(), _textSize.getSelectedItem(), _colour.getSelectedItem());
+						//TitleCreditGenerator generator = new TitleCreditGenerator(false, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath, savePath,_font.getSelectedItem(), _textSize.getSelectedItem(), _colour.getSelectedItem());
+						TitleCreditGenerator generator = new TitleCreditGenerator(true, _textArea.getText(), _textField1.getText(), _textField2.getText(), _selectedVidPath, savePath, _font, _textSize, _colour);
 						generator.execute();
 					}
 				}

@@ -34,17 +34,19 @@ public class Logger {
 		return instance;
 	}
 	
-	public void update(String text, String musicPath, String imagePath) throws IOException {
+	public void update(String text, String musicPath, String imagePath, int fontCombo, int sizeCombo, int colourCombo) throws IOException {
 		
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(_vamixFolder + "/editlog.txt", false)));
 		out.println(musicPath);
 		out.println(imagePath);
+		out.println(fontCombo);
+		out.println(sizeCombo);
+		out.println(colourCombo);
 		out.close();
 		
 		PrintWriter out2 = new PrintWriter(new BufferedWriter(new FileWriter(_vamixFolder + "/textlog.txt", false)));
 		out2.println(text);
 		out2.close();
-		
 		
 	}
 	
@@ -54,7 +56,7 @@ public class Logger {
 		if (new File(_vamixFolder + "/textlog.txt").exists()){
 			BufferedReader in;
 			try {
-				in = new BufferedReader(new FileReader(_vamixFolder + "/log.txt"));
+				in = new BufferedReader(new FileReader(_vamixFolder + "/textlog.txt"));
 				text.setText("");
 				String line = in.readLine();
 				while(line != null){
@@ -108,6 +110,72 @@ public class Logger {
 			}
 		} 
 		return "";
+	}
+	
+	public int pullFontIndex(){
+		
+		//check if log file exists
+		if (new File(_vamixFolder + "/editlog.txt").exists()){
+			BufferedReader in;
+			try {
+				in = new BufferedReader(new FileReader(_vamixFolder + "/editlog.txt"));
+				//should be in 3rdline
+				in.readLine();
+				in.readLine();
+				String line = in.readLine();
+				in.close();
+				return Integer.parseInt(line);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} 
+		return 0;
+	}
+
+	public int pullSizeIndex(){
+	
+		//check if log file exists
+		if (new File(_vamixFolder + "/editlog.txt").exists()){
+			BufferedReader in;
+			try {
+				in = new BufferedReader(new FileReader(_vamixFolder + "/editlog.txt"));
+				//should be in 4th line
+				in.readLine();
+				in.readLine();
+				in.readLine();
+				String line = in.readLine();
+				in.close();
+				return Integer.parseInt(line);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} 
+		return 0;
+	}
+
+	public int pullColourIndex(){
+	
+		//check if log file exists
+		if (new File(_vamixFolder + "/editlog.txt").exists()){
+			BufferedReader in;
+			try {
+				in = new BufferedReader(new FileReader(_vamixFolder + "/editlog.txt"));
+				//should be in 5th line
+				in.readLine();
+				in.readLine();
+				in.readLine();
+				in.readLine();
+				String line = in.readLine();
+				in.close();
+				return Integer.parseInt(line);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} 
+		return 0;
 	}
 	
 	//method that deletes edit log file
