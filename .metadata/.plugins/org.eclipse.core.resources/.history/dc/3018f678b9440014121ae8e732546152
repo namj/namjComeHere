@@ -1,0 +1,36 @@
+package a03;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class Previewer {
+	
+	public void view(String _text, String _musicPath, String _imagePath, String _resolution, String _font, String _textSize, String _colour) throws InterruptedException, IOException {
+	
+		
+		String cmd = "avconv -loop 1 -i "+ _imagePath +" -t 00:00:50 -r 24 -s "+_resolution+" -y videoFromImage.mp4";
+		ProcessBuilder Builder = new ProcessBuilder("/bin/bash","-c",cmd);
+		Builder.redirectErrorStream(true);
+		Process process = Builder.start();
+		process.waitFor();
+		
+		cmd = "avconv -i videoFromImage.mp4 -i "+ _musicPath +" -c:a copy -t 10 -vf \"drawtext=fontcolor="+_colour+":fontsize="+_textSize+":fontfile=./fonts/"+_font+":text='"+ _text +"':x=30:y=h-text_h-30\" -y titleCreditPage.mp4";
+		ProcessBuilder Builder2 = new ProcessBuilder("/bin/bash","-c",cmd);
+		Builder2.redirectErrorStream(true);
+		Process process2 = Builder2.start();
+		//if process hasn't finished happily, return exit value which will be non zero
+		process2.waitFor();
+	
+		
+		String cmd2 = "avplay -i /home/namjun/Desktop/206/assign3.3/vamix/videoFromImage.mp4";
+		ProcessBuilder Builder3 = new ProcessBuilder("/bin/bash","-c",cmd2);
+		Builder3.redirectErrorStream(true);
+		Process process3 = Builder3.start();
+		
+		Files.deleteIfExists(Paths.get("videoFromImage.mp4"));
+	}
+}
