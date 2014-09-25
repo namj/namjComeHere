@@ -33,6 +33,7 @@ public class Menu extends JFrame implements ActionListener{
 
 	private String _mediaPath = "";
 	private File _mediaFile;
+	private String savePath = "";
 	
 	private MainPanel container;
 	private EmbeddedMediaPlayerComponent ourMediaPlayer;
@@ -118,7 +119,7 @@ public class Menu extends JFrame implements ActionListener{
 	private JMenuBar setUpMenuBar() {
 		//create object for all menu bar, menus and items
 		JMenu file, edit, help, _space, _space2;
-		JMenuItem _save, _open, _exit, _dl, _title, _credit;
+		JMenuItem _open, _exit, _dl, _title, _credit;
 		JMenuItem _rmAudio,_exAudio,_ovAudio, _rpAudio;
 		JMenuBar menuBar = new JMenuBar();
 		
@@ -137,19 +138,15 @@ public class Menu extends JFrame implements ActionListener{
 		file.setForeground(Color.LIGHT_GRAY);
 		file.setMnemonic(KeyEvent.VK_F);
 		//setup of all the items belonging to the 'file' menu
-		_save = new JMenuItem("Save");
 		_open = new JMenuItem("Open");
 		_dl = new JMenuItem("Download");
 		_open.setActionCommand("Open File");
 		_open.addActionListener(this);
 		_dl.setActionCommand("Download File");
 		_dl.addActionListener(this);
-		_save.setActionCommand("Save");
-		_save.addActionListener(this);
 		_exit = new JMenuItem("Exit");
 		_exit.setActionCommand("Exit");
 		_exit.addActionListener(this);
-		file.add(_save);
 		file.add(_open);
 		file.add(_dl);
 		file.add(_exit);
@@ -329,9 +326,14 @@ public class Menu extends JFrame implements ActionListener{
 		}
 	}
 	
-	public void setUpSaveFile() {
+	public int setUpSaveFile() {
 		JFileChooser saveChooser = new JFileChooser(_mediaFile);
+		saveChooser.setDialogTitle("Select directory, enter file name to save as...");
 		int response = saveChooser.showSaveDialog(null);
+		if (response == JFileChooser.APPROVE_OPTION) {
+			savePath = saveChooser.getSelectedFile().getAbsolutePath();
+		}
+		return response;
 	}
 
 	@Override
@@ -357,11 +359,19 @@ public class Menu extends JFrame implements ActionListener{
 			if (dlURL == null) {
 				//download cancelled before beginning
 			} else {
-				//download frame opened and download commences
-				DownloadFrame downloadFrame = new DownloadFrame(dlURL);
-				downloadFrame.startDownload();
+				String msg = "Is this an open source file?";
+				int reply = JOptionPane.showConfirmDialog(null, msg);
+				//Whether its open source is confirmed, if yes
+				if (reply == JOptionPane.YES_OPTION) {
+					//download frame opened and download commences
+					DownloadFrame downloadFrame = new DownloadFrame(dlURL);
+					downloadFrame.startDownload();
+				} else if (reply == JOptionPane.NO_OPTION){
+					String warning = "Please only download from open source files\n"
+							+ "Downloading non-open source files are illegal!";
+					JOptionPane.showMessageDialog(null, warning);
+				}
 			}
-		} else if (e.getActionCommand().equals("Save")) {
 		} else if (e.getActionCommand().equals("Exit")) {
 			System.exit(0);
 		} else if (e.getActionCommand().equals("rmAudio")) {
@@ -376,8 +386,10 @@ public class Menu extends JFrame implements ActionListener{
 					//perform extraction based on 'rm&ex' when yes 
 					extractAudio("rm&ex");
 				} else if (response == JOptionPane.NO_OPTION) {
+					setUpSaveFile();
 					//if no, begin audio process for removal (rm)
 					AudioProcessor aP = new AudioProcessor("rm",_mediaFile);
+					aP.setSaveDir(savePath);
 					aP.execute();
 				}
 			//if check returns a 2, no audio signal
@@ -401,8 +413,9 @@ public class Menu extends JFrame implements ActionListener{
 			//same as above
 			int audioCheck = checkAudioSignal();
 			if (audioCheck == 0) {
+				setUpSaveFile();
 				//overlay frame pops up after audio is checked
-				OverlayFrame ovFrame = new OverlayFrame(currentVideo,_mediaFile);
+				OverlayFrame ovFrame = new OverlayFrame(currentVideo,_mediaFile, savePath);
 			} else if (audioCheck == 2) {
 				String msg = "The media contains no audio signal!\n" +
 						"There is no audio to be overlayed.";
@@ -413,7 +426,8 @@ public class Menu extends JFrame implements ActionListener{
 			int audioCheck = checkAudioSignal();
 			//doesn't matter whether there is an audio signal or not
 			if (audioCheck == 0 || audioCheck == 2) {
-				ReplaceFrame rpFrame = new ReplaceFrame(currentVideo,_mediaFile);
+				setUpSaveFile();
+				ReplaceFrame rpFrame = new ReplaceFrame(currentVideo,_mediaFile, savePath);
 			}
 		//for command create title/credit page, open appropriate frame
 		} else if (e.getActionCommand().equals("Create title")){

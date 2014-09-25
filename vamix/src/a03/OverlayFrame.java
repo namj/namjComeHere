@@ -21,18 +21,20 @@ public class OverlayFrame extends JFrame{
 	EmbeddedMediaPlayer vid;
 	File vidFile;
 	String musicPath;
-	JLabel descripA;
-	JLabel descripB;
-	JTextField songLoc;
-	JButton selectFile, action, cancel;
-	ActionListener ov;
+	private String savePath;
+	private JLabel descripA;
+	private JLabel descripB;
+	private JTextField songLoc;
+	private JButton selectFile, action, cancel;
+	private ActionListener ov;
 	
 	//Get user's screen dimension
 	private static final Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 	private static final int _screenHeight = (int)d.getHeight();
 	private static final int _screenWidth = (int)d.getWidth();
 	
-	public OverlayFrame(EmbeddedMediaPlayer video, File videoFile) {
+	public OverlayFrame(EmbeddedMediaPlayer video, File videoFile,String saveDir) {
+		savePath = saveDir;
 		vid = video;
 		vidFile = videoFile;
 		
@@ -84,6 +86,7 @@ public class OverlayFrame extends JFrame{
 				if (checkIfAudio()) {
 					long time = vid.getLength()/1000;
 					AudioProcessor aP = new AudioProcessor("ov",vidFile);
+					aP.setSaveDir(savePath);
 					aP.setForOverlay(musicPath,time);
 					aP.execute();
 					dispose();

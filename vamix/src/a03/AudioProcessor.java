@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingWorker;
@@ -128,7 +129,17 @@ public class AudioProcessor extends SwingWorker<Integer,Void>{
 			}
 		}
 		if (process.equals("rm") || process.equals("rm&ex")) {
-			cmd = "avconv -i " + mediaFile.getAbsolutePath() + " -c:v copy -an AudioRM" + fileType;
+			if (process.equals("rm&ex")) {
+				JFileChooser saveChooser = new JFileChooser(mediaFile);
+				saveChooser.setDialogTitle("Select directory, enter file name to save as...");
+				int response = saveChooser.showSaveDialog(null);
+				if (response == JFileChooser.APPROVE_OPTION) {
+					saveDir = saveChooser.getSelectedFile().getAbsolutePath();
+				} else {
+					return 667;
+				}
+			}
+			cmd = "avconv -i " + mediaFile.getAbsolutePath() + " -c:v copy -an " + saveDir + fileType;
 			audioProcessBuilder = new ProcessBuilder("/bin/bash","-c",cmd);
 			audioProcess = audioProcessBuilder.start();
 			int exit = audioProcess.waitFor();
@@ -141,7 +152,7 @@ public class AudioProcessor extends SwingWorker<Integer,Void>{
 		if (process.equals("ov")) {
 			cmd = "avconv -i " + mediaFile.getAbsolutePath() + " -i " + audioPath + 
 					" -filter_complex [0:a][1:a]amix[out] -map \"[out]\" -map 0:v -c:v copy"
-					+ " -t " + overlayDur + " -strict experimental overlay" + fileType;
+					+ " -t " + overlayDur + " -strict experimental " + saveDir + fileType;
 			audioProcessBuilder = new ProcessBuilder("/bin/bash","-c",cmd);
 			audioProcess = audioProcessBuilder.start();
 			int exit = audioProcess.waitFor();
@@ -154,7 +165,7 @@ public class AudioProcessor extends SwingWorker<Integer,Void>{
 		if (process.equals("rp")) {
 			cmd = "avconv -i " + mediaFile.getAbsolutePath() + " -i " + audioPath +
 					" -map 1:a -map 0:v -c:v copy -t " + overlayDur + " -strict experimental " +
-					"replaced" + fileType;
+					saveDir + fileType;
 			audioProcessBuilder = new ProcessBuilder("/bin/bash","-c",cmd);
 			audioProcess = audioProcessBuilder.start();
 			int exit = audioProcess.waitFor();
@@ -196,6 +207,8 @@ public class AudioProcessor extends SwingWorker<Integer,Void>{
 				} else if (process.equals("rm") || process.equals("rm&ex")) {
 					if (get() == 0) {
 						progressLabel.setText("Audio Removal Successful!");
+					} else if (get() == 667) {
+						//cancelled option for rm&ex
 					} else {
 						progressLabel.setText("Removal failed: Unexpected error");
 					}
