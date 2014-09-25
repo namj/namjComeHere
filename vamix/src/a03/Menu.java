@@ -30,7 +30,7 @@ public class Menu extends JFrame implements ActionListener{
 	//Main frame size
 	private static final int _menuHeight = 900;
 	private static final int _menuWidth = 1200;
-
+ 
 	private String _mediaPath = "";
 	private File _mediaFile;
 	
