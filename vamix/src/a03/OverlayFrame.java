@@ -126,6 +126,7 @@ public class OverlayFrame extends JFrame{
 		} catch (Exception ex) {
 			//if exception occurs nothing extra happens
 		}
+		
 		if (isAudio) {
 			return true;
 		}

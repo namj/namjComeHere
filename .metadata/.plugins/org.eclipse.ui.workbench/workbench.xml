@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <workbench progressCount="21" version="2.0">
 <workbenchAdvisor/>
 <window height="766" width="1012" x="530" y="150">
+=======
+<workbench progressCount="17" version="2.0">
+<workbenchAdvisor/>
+<window height="784" width="1020" x="178" y="83">
+>>>>>>> ebfe9f969d6737b68de4c7ee48e6b436c61ef791
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
@@ -29,17 +35,25 @@
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="2"/>
 <part id="0"/>
 <part id="1"/>
+<<<<<<< HEAD
 <part id="2"/>
 <part id="3"/>
 <part id="4"/>
 <part id="5"/>
 <part id="6"/>
+=======
+<part id="3"/>
+<part id="4"/>
+<part id="5"/>
+>>>>>>> ebfe9f969d6737b68de4c7ee48e6b436c61ef791
 </presentation>
 </folder>
 </info>
 </editorArea>
+<<<<<<< HEAD
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Menu.java" partName="Menu.java" path="/afs/ec.auckland.ac.nz/users/m/c/mcho588/unixhome/Desktop/206/Assignment3/namjComeHere/vamix/src/a03/Menu.java" title="Menu.java" tooltip="vamix/src/a03/Menu.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/vamix/src/a03/Menu.java"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="10566" selectionTopPixel="5068"/>
@@ -67,6 +81,31 @@
 <editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AudioProcessor.java" partName="AudioProcessor.java" path="/afs/ec.auckland.ac.nz/users/m/c/mcho588/unixhome/Desktop/206/Assignment3/namjComeHere/vamix/src/a03/AudioProcessor.java" title="AudioProcessor.java" tooltip="vamix/src/a03/AudioProcessor.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/vamix/src/a03/AudioProcessor.java"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6304" selectionTopPixel="3016"/>
+=======
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AudioProcessor.java" partName="AudioProcessor.java" path="/home/andy/Desktop/206/Assignments/3a/namjComeHere/vamix/src/a03/AudioProcessor.java" title="AudioProcessor.java" tooltip="vamix/src/a03/AudioProcessor.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/vamix/src/a03/AudioProcessor.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6428" selectionTopPixel="2878"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MediaProgressChecker.java" partName="MediaProgressChecker.java" path="/home/andy/Desktop/206/Assignments/3a/namjComeHere/vamix/src/a03/MediaProgressChecker.java" title="MediaProgressChecker.java" tooltip="vamix/src/a03/MediaProgressChecker.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/vamix/src/a03/MediaProgressChecker.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="672" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Menu.java" partName="Menu.java" path="/home/andy/Desktop/206/Assignments/3a/namjComeHere/vamix/src/a03/Menu.java" title="Menu.java" tooltip="vamix/src/a03/Menu.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/vamix/src/a03/Menu.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6897" selectionTopPixel="2868"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="OverlayFrame.java" partName="OverlayFrame.java" path="/home/andy/Desktop/206/Assignments/3a/namjComeHere/vamix/src/a03/OverlayFrame.java" title="OverlayFrame.java" tooltip="vamix/src/a03/OverlayFrame.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/vamix/src/a03/OverlayFrame.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="615" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PlaybackPanel.java" partName="PlaybackPanel.java" path="/home/andy/Desktop/206/Assignments/3a/namjComeHere/vamix/src/a03/PlaybackPanel.java" title="PlaybackPanel.java" tooltip="vamix/src/a03/PlaybackPanel.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/vamix/src/a03/PlaybackPanel.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1215" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ReplaceFrame.java" partName="ReplaceFrame.java" path="/home/andy/Desktop/206/Assignments/3a/namjComeHere/vamix/src/a03/ReplaceFrame.java" title="ReplaceFrame.java" tooltip="vamix/src/a03/ReplaceFrame.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/vamix/src/a03/ReplaceFrame.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="498" selectionTopPixel="0"/>
+>>>>>>> ebfe9f969d6737b68de4c7ee48e6b436c61ef791
 </editor>
 </editors>
 <views>
@@ -305,7 +344,11 @@
 </presentation>
 </folder>
 </info>
+<<<<<<< HEAD
 <info folder="true" part="right" ratio="0.7495854" ratioLeft="904" ratioRight="302" relationship="2" relative="org.eclipse.ui.editorss">
+=======
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@59676af3" ratio="0.8908342" ratioLeft="865" ratioRight="106" relationship="2" relative="org.eclipse.ui.editorss">
+>>>>>>> ebfe9f969d6737b68de4c7ee48e6b436c61ef791
 <folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
 <page content="org.eclipse.ui.texteditor.TemplatesView" label="LabelNotFound"/>
@@ -324,6 +367,7 @@
 <editors>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/vamix/src/a03/AudioProcessor.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/vamix/src/a03/Menu.java"/>
+<<<<<<< HEAD
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/vamix/src/a03/MainPanel.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/vamix/src/a03/OverlayFrame.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/vamix/src/a03/Downloader.java"/>
@@ -478,6 +522,161 @@
 </item>
 <item active="true" historyLabel="AudioProcessor.java" index="0">
 <position info="not_deleted" x="5937" y="0"/>
+=======
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/vamix/src/a03/OverlayFrame.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/vamix/src/ReplaceFrame.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/vamix/src/a03/ReplaceFrame.java"/>
+</editors>
+<item historyLabel="Menu.java" index="1">
+<position info="not_deleted" x="4409" y="0"/>
+</item>
+<item historyLabel="Menu.java" index="1">
+<position info="not_deleted" x="12911" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position info="not_deleted" x="3510" y="0"/>
+</item>
+<item historyLabel="Menu.java" index="1">
+<position info="not_deleted" x="13198" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position info="not_deleted" x="2043" y="0"/>
+</item>
+<item historyLabel="ReplaceFrame.java" index="3">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position info="not_deleted" x="2043" y="0"/>
+</item>
+<item historyLabel="ReplaceFrame.java" index="4">
+<position info="not_deleted" x="865" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position info="not_deleted" x="2043" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position info="not_deleted" x="2922" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position info="not_deleted" x="2803" y="0"/>
+</item>
+<item historyLabel="ReplaceFrame.java" index="4">
+<position info="not_deleted" x="865" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position info="not_deleted" x="2803" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position info="not_deleted" x="3713" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position info="not_deleted" x="3912" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position/>
+</item>
+<item historyLabel="ReplaceFrame.java" index="4">
+<position info="not_deleted" x="865" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position/>
+</item>
+<item historyLabel="ReplaceFrame.java" index="4">
+<position info="not_deleted" x="865" y="0"/>
+</item>
+<item historyLabel="ReplaceFrame.java" index="4">
+<position info="not_deleted" x="860" y="0"/>
+</item>
+<item historyLabel="ReplaceFrame.java" index="4">
+<position info="not_deleted" x="863" y="0"/>
+</item>
+<item historyLabel="ReplaceFrame.java" index="4">
+<position info="not_deleted" x="824" y="0"/>
+</item>
+<item historyLabel="AudioProcessor.java" index="0">
+<position info="not_deleted" x="1225" y="0"/>
+</item>
+<item historyLabel="ReplaceFrame.java" index="4">
+<position info="not_deleted" x="824" y="0"/>
+</item>
+<item historyLabel="AudioProcessor.java" index="0">
+<position info="not_deleted" x="1225" y="0"/>
+</item>
+<item historyLabel="AudioProcessor.java" index="0">
+<position info="not_deleted" x="2488" y="0"/>
+</item>
+<item historyLabel="AudioProcessor.java" index="0">
+<position info="not_deleted" x="4580" y="0"/>
+</item>
+<item historyLabel="AudioProcessor.java" index="0">
+<position info="not_deleted" x="4987" y="0"/>
+</item>
+<item historyLabel="AudioProcessor.java" index="0">
+<position info="not_deleted" x="4833" y="0"/>
+</item>
+<item historyLabel="AudioProcessor.java" index="0">
+<position info="not_deleted" x="6280" y="0"/>
+</item>
+<item historyLabel="AudioProcessor.java" index="0">
+<position info="not_deleted" x="6435" y="0"/>
+</item>
+<item historyLabel="AudioProcessor.java" index="0">
+<position info="not_deleted" x="6345" y="0"/>
+</item>
+<item historyLabel="AudioProcessor.java" index="0">
+<position info="not_deleted" x="6428" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position info="not_deleted" x="3841" y="0"/>
+</item>
+<item historyLabel="ReplaceFrame.java" index="4">
+<position info="not_deleted" x="824" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position/>
+</item>
+<item historyLabel="ReplaceFrame.java" index="4">
+<position info="not_deleted" x="819" y="0"/>
+</item>
+<item historyLabel="Menu.java" index="1">
+<position info="not_deleted" x="13198" y="0"/>
+</item>
+<item historyLabel="Menu.java" index="1">
+<position info="not_deleted" x="12766" y="0"/>
+</item>
+<item historyLabel="Menu.java" index="1">
+<position info="not_deleted" x="12808" y="0"/>
+</item>
+<item historyLabel="Menu.java" index="1">
+<position info="not_deleted" x="12911" y="0"/>
+</item>
+<item historyLabel="Menu.java" index="1">
+<position info="not_deleted" x="12762" y="0"/>
+</item>
+<item historyLabel="ReplaceFrame.java" index="4">
+<position info="not_deleted" x="498" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position info="not_deleted" x="2938" y="0"/>
+</item>
+<item historyLabel="Menu.java" index="1">
+<position info="not_deleted" x="12762" y="0"/>
+</item>
+<item historyLabel="Menu.java" index="1">
+<position info="not_deleted" x="6897" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position info="not_deleted" x="2938" y="0"/>
+</item>
+<item historyLabel="ReplaceFrame.java" index="4">
+<position info="not_deleted" x="498" y="0"/>
+</item>
+<item historyLabel="OverlayFrame.java" index="2">
+<position info="not_deleted" x="2938" y="0"/>
+</item>
+<item active="true" historyLabel="OverlayFrame.java" index="2">
+<position info="not_deleted" x="3876" y="0"/>
+>>>>>>> ebfe9f969d6737b68de4c7ee48e6b436c61ef791
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -496,8 +695,20 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AudioProcessor.java" tooltip="vamix/src/a03/AudioProcessor.java">
-<persistable path="/vamix/src/a03/AudioProcessor.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ReplaceFrame.java" tooltip="vamix/src/a03/ReplaceFrame.java">
+<persistable path="/vamix/src/a03/ReplaceFrame.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ReplaceFrame.java" tooltip="vamix/src/ReplaceFrame.java">
+<persistable path="/vamix/src/ReplaceFrame.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PlaybackPanel.java" tooltip="vamix/src/a03/PlaybackPanel.java">
+<persistable path="/vamix/src/a03/PlaybackPanel.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MainPanel.java" tooltip="vamix/src/a03/MainPanel.java">
+<persistable path="/vamix/src/a03/MainPanel.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="OverlayFrame.java" tooltip="vamix/src/a03/OverlayFrame.java">
+<persistable path="/vamix/src/a03/OverlayFrame.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Downloader.java" tooltip="vamix/src/a03/Downloader.java">
 <persistable path="/vamix/src/a03/Downloader.java"/>
@@ -508,6 +719,7 @@
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ReplaceFrame.java" tooltip="vamix/src/a03/ReplaceFrame.java">
 <persistable path="/vamix/src/a03/ReplaceFrame.java"/>
 </file>
+<<<<<<< HEAD
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="OverlayFrame.java" tooltip="vamix/src/a03/OverlayFrame.java">
 <persistable path="/vamix/src/a03/OverlayFrame.java"/>
 </file>
@@ -516,10 +728,24 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DownloadFrame.java" tooltip="vamix/src/a03/DownloadFrame.java">
 <persistable path="/vamix/src/a03/DownloadFrame.java"/>
+=======
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MediaProgressChecker.java" tooltip="vamix/src/a03/MediaProgressChecker.java">
+<persistable path="/vamix/src/a03/MediaProgressChecker.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AudioProcessor.java" tooltip="vamix/src/a03/AudioProcessor.java">
+<persistable path="/vamix/src/a03/AudioProcessor.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="VolumePanel.java" tooltip="vamix/src/a03/VolumePanel.java">
+<persistable path="/vamix/src/a03/VolumePanel.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FastForwarder.java" tooltip="vamix/src/a03/FastForwarder.java">
+<persistable path="/vamix/src/a03/FastForwarder.java"/>
+>>>>>>> ebfe9f969d6737b68de4c7ee48e6b436c61ef791
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AudioProcessorFrame.java" tooltip="vamix/src/a03/AudioProcessorFrame.java">
 <persistable path="/vamix/src/a03/AudioProcessorFrame.java"/>
 </file>
+<<<<<<< HEAD
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TitleCreditGenerator.java" tooltip="vamix/src/a03/TitleCreditGenerator.java">
 <persistable path="/vamix/src/a03/TitleCreditGenerator.java"/>
 </file>
@@ -528,6 +754,10 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Menu.java" tooltip="vamix/src/a03/Menu.java">
 <persistable path="/vamix/src/a03/Menu.java"/>
+=======
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CreateTitleFrame.java" tooltip="vamix/src/a03/CreateTitleFrame.java">
+<persistable path="/vamix/src/a03/CreateTitleFrame.java"/>
+>>>>>>> ebfe9f969d6737b68de4c7ee48e6b436c61ef791
 </file>
 </mruList>
 </workbench>

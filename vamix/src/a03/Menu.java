@@ -392,6 +392,7 @@ public class Menu extends JFrame implements ActionListener{
 			}
 		} else if (e.getActionCommand().equals("rpAudio")) {
 			int audioCheck = checkAudioSignal();
+
 			if (audioCheck == 0 || audioCheck == 2) {
 				ReplaceFrame rpFrame = new ReplaceFrame(currentVideo,_mediaFile);
 			}
