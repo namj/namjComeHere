@@ -34,15 +34,22 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 	private JButton _cancelButton;
 	private boolean _isCancelled = false;
 	
+	private String _font;
+	private String _textSize;
+	private String _colour;
+	
 
 	//constructor for this swingworker
-	public TitleCreditGenerator(boolean titleOrCredit, String text, String music, String image, String path, String savePath){
+	public TitleCreditGenerator(boolean titleOrCredit, String text, String music, String image, String path, String savePath, Object font, Object size, Object colour){
 		_titleOrCredit = titleOrCredit;
 		_text = text;
 		_musicPath = music;
 		_imagePath = image;
 		_videoPath = path;
 		_savePath = savePath;
+		_font = font.toString();
+		_textSize = size.toString();
+		_colour = colour.toString();
 		
 		_frame = new JFrame();
 		_progressText = new JLabel("encoding...");
@@ -127,7 +134,7 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 		}
 		
 		//terminal command to add 10sec and music to the 10sec video
-		cmd = "avconv -i "+ _savePath +"/videoFromImage.mp4 -i "+ _musicPath +" -c:a copy -t 10 -vf \"drawtext=fontcolor=white:fontsize=30:fontfile=/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-L.ttf:text='"+ _text +"':x=30:y=h-text_h-30\" -y "+ _savePath +"/titleCreditPage.mp4";
+		cmd = "avconv -i "+ _savePath +"/videoFromImage.mp4 -i "+ _musicPath +" -c:a copy -t 10 -vf \"drawtext=fontcolor="+_colour+":fontsize="+_textSize+":fontfile=./fonts/"+_font+":text='"+ _text +"':x=30:y=h-text_h-30\" -y "+ _savePath +"/titleCreditPage.mp4";
 		ProcessBuilder Builder2 = new ProcessBuilder("/bin/bash","-c",cmd);
 		Builder2.redirectErrorStream(true);
 		Process process2 = Builder2.start();
