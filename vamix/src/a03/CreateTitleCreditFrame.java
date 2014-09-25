@@ -33,6 +33,7 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 	private JComboBox<String> _font, _textSize, _colour;
 	private JButton _generateButton;
 	private JButton _browseButton1, _browseButton2;
+	private JScrollPane _scrollBar;
 	private String _frameTitle;
 	String iconPath = "./icons";
 	
@@ -86,15 +87,14 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 		//set up text area
 		this.add(_textArea = new JTextArea());
 		_textArea.setBounds(25, 30, 550, 100);
-		_textArea.setText(Logger.getInstance().pullText());
 		_textArea.setDocument(new TextManager(220));
 		_textArea.setLineWrap(true);
 		_textArea.setWrapStyleWord(true);
+		Logger.getInstance().pullText(_textArea);
 		
 		//make scroll pane
-		JScrollPane _scrollPane = new JScrollPane(_textArea);
-		this.add(_scrollPane);
-		_scrollPane.setBounds(25, 30, 550, 100);
+		this.add(_scrollBar = new JScrollPane(_textArea));
+		_scrollBar.setBounds(25, 30, 550, 100);
 		
 		this.add(_font);
 		_font.setBounds(65, 140, 150, 30);

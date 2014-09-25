@@ -12,6 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javax.swing.JTextArea;
+
 public class Logger {
 	
 	//declare/initialise components
@@ -35,31 +37,36 @@ public class Logger {
 	public void update(String text, String musicPath, String imagePath) throws IOException {
 		
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(_vamixFolder + "/editlog.txt", false)));
-		out.println(text);
 		out.println(musicPath);
 		out.println(imagePath);
 		out.close();
 		
+		PrintWriter out2 = new PrintWriter(new BufferedWriter(new FileWriter(_vamixFolder + "/textlog.txt", false)));
+		out2.println(text);
+		out2.close();
+		
+		
 	}
 	
 	//this method should return the text, ie first line of editlog file
-	public String pullText(){
+	public void pullText(JTextArea text){
 		
-		//check if edit log even exists
-		if (new File(_vamixFolder + "/editlog.txt").exists()){
+		if (new File(_vamixFolder + "/textlog.txt").exists()){
 			BufferedReader in;
 			try {
-				in = new BufferedReader(new FileReader(_vamixFolder + "/editlog.txt"));
-				//the first line should contain the text
+				in = new BufferedReader(new FileReader(_vamixFolder + "/log.txt"));
+				text.setText("");
 				String line = in.readLine();
-				in.close();
-				return line;
+				while(line != null){
+				  text.append(line + "\n");
+				  line = in.readLine();
+				}
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		} 
-		return "";
+		}
+	
 	}
 	
 	//this method should return the path of music file last used. ie second line of edit log file
@@ -70,9 +77,8 @@ public class Logger {
 			BufferedReader in;
 			try {
 				in = new BufferedReader(new FileReader(_vamixFolder + "/editlog.txt"));
-				//the second line should contain the path
+				//should be first line;
 				String line = in.readLine();
-				line = in.readLine();
 				in.close();
 				return line;
 			} catch (IOException e1) {
@@ -85,15 +91,15 @@ public class Logger {
 	
 	//this method should return the path of image file last used. ie third line of edit log file
 	public String pullImagePath(){
+		
 		//check if log file exists
 		if (new File(_vamixFolder + "/editlog.txt").exists()){
 			BufferedReader in;
 			try {
 				in = new BufferedReader(new FileReader(_vamixFolder + "/editlog.txt"));
-				//the third line should contain the path
+				//the secondline should contain path to image
+				in.readLine();
 				String line = in.readLine();
-				line = in.readLine();
-				line = in.readLine();
 				in.close();
 				return line;
 			} catch (IOException e1) {
@@ -107,5 +113,7 @@ public class Logger {
 	//method that deletes edit log file
 	public void deleteLog() throws IOException{
 		Files.delete(Paths.get(_vamixFolder + "/editlog.txt"));
+		Files.delete(Paths.get(_vamixFolder + "/textlog.txt"));
 	}
+	
 }
