@@ -40,6 +40,7 @@ public class Menu extends JFrame implements ActionListener{
 	
 	private JButton openButton;
 	private JButton dlButton;
+	private JButton editButton;
 	
 	public Menu() {
 		
@@ -96,7 +97,14 @@ public class Menu extends JFrame implements ActionListener{
 		dlButton.setLocation(50,15);
 		dlButton.setActionCommand("Download File");
 		dlButton.addActionListener(this);
-		container.setDownloadButton(dlButton);
+		container.setButton(dlButton);
+		
+		//a shortcut edit button for the edit function frame
+		editButton = new JButton("Edit");
+		editButton.setBounds(220, 15, 150, 40);
+		editButton.setActionCommand("Edit");
+		editButton.addActionListener(this);
+		container.setButton(editButton);
 		
 		setContentPane(container);
 		
@@ -106,52 +114,11 @@ public class Menu extends JFrame implements ActionListener{
 		setJMenuBar(setUpMenuBar());
 	}
 	
-	private int checkAudioSignal() {
-		if (_mediaFile != null) {
-			boolean isVideo = false;
-			boolean isAudio = false;
-		
-			//bash command to 'grep' to verify file as media
-			String audCmd = "avconv -i " + _mediaFile.getAbsolutePath() + " 2>&1 | grep Audio:";
-			String vidCmd = "avconv -i " + _mediaFile.getAbsolutePath() + " 2>&1 | grep Video:";
-			
-			ProcessBuilder audCheckBuilder = new ProcessBuilder("/bin/bash","-c",audCmd);
-			ProcessBuilder vidCheckBuilder = new ProcessBuilder("/bin/bash","-c",vidCmd);
-			try {
-				//process run
-				Process audCheck = audCheckBuilder.start();
-				int audTerm = audCheck.waitFor();
-				Process vidCheck = vidCheckBuilder.start();
-				int vidTerm = vidCheck.waitFor();
-				//a correct termination indicates it is a media file
-				if (audTerm == 0) {
-					isAudio = true;
-				} 
-				if (vidTerm == 0){
-					isVideo = true;
-				}
-				//only video files with audio signals are checked correct (0 for success)
-				if (isAudio && !isVideo) {
-					JOptionPane.showMessageDialog(null, "Opened file must be of video type");
-					return 3;
-				} else if (isAudio && isVideo) {
-					return 0;
-				}
-			} catch (Exception ex) {
-				//if exception occurs nothing extra happens
-			}
-		} else {
-			JOptionPane.showMessageDialog(null, "Open a file before attempting any audio operation.");
-			return 1;
-		}
-		return 2;
-	}
-	
 	//Method to set up menu bar to be used in the frame
 	private JMenuBar setUpMenuBar() {
 		//create object for all menu bar, menus and items
 		JMenu file, edit, help, _space, _space2;
-		JMenuItem _save, _open, _close, _exit, _dl, _title, _credit;
+		JMenuItem _save, _open, _exit, _dl, _title, _credit;
 		JMenuItem _rmAudio,_exAudio,_ovAudio, _rpAudio;
 		JMenuBar menuBar = new JMenuBar();
 		
@@ -177,14 +144,14 @@ public class Menu extends JFrame implements ActionListener{
 		_open.addActionListener(this);
 		_dl.setActionCommand("Download File");
 		_dl.addActionListener(this);
-		_close = new JMenuItem("Close");
+		_save.setActionCommand("Save");
+		_save.addActionListener(this);
 		_exit = new JMenuItem("Exit");
-		_close.setActionCommand("Close");
-		_close.addActionListener(this);
+		_exit.setActionCommand("Exit");
+		_exit.addActionListener(this);
 		file.add(_save);
 		file.add(_open);
 		file.add(_dl);
-		file.add(_close);
 		file.add(_exit);
 		menuBar.add(file);
 		menuBar.add(_space);
@@ -239,6 +206,47 @@ public class Menu extends JFrame implements ActionListener{
 				new Menu().setVisible(true);
 			}
 		});
+	}
+	
+	private int checkAudioSignal() {
+		if (_mediaFile != null) {
+			boolean isVideo = false;
+			boolean isAudio = false;
+		
+			//bash command to 'grep' to verify file as media
+			String audCmd = "avconv -i " + _mediaFile.getAbsolutePath() + " 2>&1 | grep Audio:";
+			String vidCmd = "avconv -i " + _mediaFile.getAbsolutePath() + " 2>&1 | grep Video:";
+			
+			ProcessBuilder audCheckBuilder = new ProcessBuilder("/bin/bash","-c",audCmd);
+			ProcessBuilder vidCheckBuilder = new ProcessBuilder("/bin/bash","-c",vidCmd);
+			try {
+				//process run
+				Process audCheck = audCheckBuilder.start();
+				int audTerm = audCheck.waitFor();
+				Process vidCheck = vidCheckBuilder.start();
+				int vidTerm = vidCheck.waitFor();
+				//a correct termination indicates it is a media file
+				if (audTerm == 0) {
+					isAudio = true;
+				} 
+				if (vidTerm == 0){
+					isVideo = true;
+				}
+				//only video files with audio signals are checked correct (0 for success)
+				if (isAudio && !isVideo) {
+					JOptionPane.showMessageDialog(null, "Opened file must be of video type");
+					return 3;
+				} else if (isAudio && isVideo) {
+					return 0;
+				}
+			} catch (Exception ex) {
+				//if exception occurs nothing extra happens
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Open a file before attempting any audio operation.");
+			return 1;
+		}
+		return 2;
 	}
 	
 	//method to start playing a video given a file
@@ -320,6 +328,11 @@ public class Menu extends JFrame implements ActionListener{
 			//nothing happens when cancelled
 		}
 	}
+	
+	public void setUpSaveFile() {
+		JFileChooser saveChooser = new JFileChooser(_mediaFile);
+		int response = saveChooser.showSaveDialog(null);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -348,6 +361,9 @@ public class Menu extends JFrame implements ActionListener{
 				DownloadFrame downloadFrame = new DownloadFrame(dlURL);
 				downloadFrame.startDownload();
 			}
+		} else if (e.getActionCommand().equals("Save")) {
+		} else if (e.getActionCommand().equals("Exit")) {
+			System.exit(0);
 		} else if (e.getActionCommand().equals("rmAudio")) {
 			//attain return value from checking audio signal
 			int audioCheck = checkAudioSignal();
@@ -382,8 +398,10 @@ public class Menu extends JFrame implements ActionListener{
 				JOptionPane.showMessageDialog(null,msg);
 			}
 		} else if (e.getActionCommand().equals("ovAudio")) {
+			//same as above
 			int audioCheck = checkAudioSignal();
 			if (audioCheck == 0) {
+				//overlay frame pops up after audio is checked
 				OverlayFrame ovFrame = new OverlayFrame(currentVideo,_mediaFile);
 			} else if (audioCheck == 2) {
 				String msg = "The media contains no audio signal!\n" +
@@ -391,15 +409,17 @@ public class Menu extends JFrame implements ActionListener{
 				JOptionPane.showMessageDialog(null,msg);
 			}
 		} else if (e.getActionCommand().equals("rpAudio")) {
+			//gets checked audio int
 			int audioCheck = checkAudioSignal();
-
+			//doesn't matter whether there is an audio signal or not
 			if (audioCheck == 0 || audioCheck == 2) {
 				ReplaceFrame rpFrame = new ReplaceFrame(currentVideo,_mediaFile);
 			}
+		//for command create title/credit page, open appropriate frame
 		} else if (e.getActionCommand().equals("Create title")){
 			CreateTitleCreditFrame titleFrame = new CreateTitleCreditFrame(_mediaPath, "Create Title page(s)");
 		} else if (e.getActionCommand().equals("Create credit")){
-			CreateTitleCreditFrame titleFrame = new CreateTitleCreditFrame(_mediaPath, "Create Credit page(s)");
+			CreateTitleCreditFrame creditFrame = new CreateTitleCreditFrame(_mediaPath, "Create Credit page(s)");
 		}
 	}
 }
