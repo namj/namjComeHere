@@ -213,7 +213,11 @@ public class PlaybackPanel extends JPanel implements MouseListener{
 		return imgButton;
 	}
 	
+<<<<<<< HEAD
 	//mouse listeners, completely unnecessary but cool
+=======
+	//mouse listeners, completely unnecessary
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 	//just changes cursors back and forth when entering and exiting component
 	//only when enabled, as well as switching the button icons from highlighted one
 	@Override

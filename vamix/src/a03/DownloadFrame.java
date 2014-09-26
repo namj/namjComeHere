@@ -13,6 +13,10 @@ import javax.swing.JProgressBar;
 
 public class DownloadFrame extends JFrame{
 	private String dlURL;
+<<<<<<< HEAD
+=======
+	private String saveDir;
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 	//Components in the download frame
 	private JProgressBar dlProgress;
 	private JButton cancelButton, pauseButton;
@@ -65,12 +69,25 @@ public class DownloadFrame extends JFrame{
 		});
 		add(cancelButton);
 		
+<<<<<<< HEAD
 		pauseButton = new JButton("Pause");
 		pauseButton.setBounds(195,170,110,30);
 		pauseButton.addActionListener(new ActionListener() {
 			boolean isPaused = false;
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+=======
+		//set up for pause/resume button for pausing and resuming downloads
+		pauseButton = new JButton("Pause");
+		pauseButton.setBounds(195,170,110,30);
+		pauseButton.addActionListener(new ActionListener() {
+			//default is download is not paused
+			boolean isPaused = false;
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				//if paused execute a downloader swing worker and set button text to pause
+				//else stop the download and change button to resume
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 				if (isPaused) {
 					downloader = new Downloader(getItself());
 					downloader.execute();
@@ -120,6 +137,10 @@ public class DownloadFrame extends JFrame{
 	//the execute method for this class, starts the download swing worker
 	public void startDownload() {
 		downloader = new Downloader(this);
+<<<<<<< HEAD
+=======
+		downloader.setSave(saveDir);
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 		downloader.execute();
 	}
 	
@@ -127,5 +148,12 @@ public class DownloadFrame extends JFrame{
 	public void exit() {
 		this.dispose();
 	}
+<<<<<<< HEAD
+=======
+
+	public void setSaveDir(String savePath) {
+		saveDir = savePath;
+	}
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 	
 }

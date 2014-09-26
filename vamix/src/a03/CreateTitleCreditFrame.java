@@ -6,8 +6,11 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+<<<<<<< HEAD
 import java.io.IOException;
 
+=======
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -38,7 +41,11 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 	private JTextField _textField1, _textField2;
 	private JLabel _label1, _label2, _label3, _labelFont, _labelColour, _labelSize;
 	private JComboBox<String> _font, _textSize, _colour;
+<<<<<<< HEAD
 	private JButton _generateButton, _previewButton;
+=======
+	private JButton _generateButton;
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 	private JButton _browseButton1, _browseButton2;
 	private JScrollPane _scrollBar;
 	private String _frameTitle;
@@ -76,8 +83,13 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 		
 		//setup JComboBox(s)
 		String[] fonts = {"FreeMono.ttf", "Kinnari.ttf", "Purisa-Oblique.ttf", "TakaoPGothic.ttf", "TlwgTypist-Bold.ttf", "Ubuntu-M.ttf"};
+<<<<<<< HEAD
 		String[] sizes = { "10" , "20", "30", "40", "50", "60", "70"};
 		String[] colours = { "black", "white", "red", "blue", "yellow", "green", "purple", "orange" };
+=======
+		String[] sizes = { "10" , "20", "30", "40", "50", "60" };
+		String[] colours = { "red", "blue", "white", "black" };
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 		_font = new JComboBox<String>(fonts);
 		_textSize = new JComboBox<String>(sizes);
 		_colour = new JComboBox<String>(colours);
@@ -98,10 +110,13 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 		_textArea.setLineWrap(true);
 		_textArea.setWrapStyleWord(true);
 		Logger.getInstance().pullText(_textArea);
+<<<<<<< HEAD
 		//add preview button
 		this.add(_previewButton = new JButton("Preview"));
 		_previewButton.setBounds(450, 7, 100, 20);
 		_previewButton.addActionListener(this);
+=======
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 		
 		//make scroll pane
 		this.add(_scrollBar = new JScrollPane(_textArea));
@@ -173,7 +188,11 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 				_mediaFile = fileChooser.getSelectedFile();
 			
 				//bash command to 'grep' to verify file as audio
+<<<<<<< HEAD
 				String audCmd = "file -b " + _mediaFile.getAbsolutePath() + " | grep -i audio";
+=======
+				String audCmd = "file " + _mediaFile.getAbsolutePath() + " | grep -i audio";
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 				ProcessBuilder audCheckBuilder = new ProcessBuilder("/bin/bash","-c",audCmd);
 				try {
 					//process run
@@ -204,10 +223,17 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 				_mediaFile = fileChooser.getSelectedFile();
 			
 				//bash command to 'grep' to verify file as audio
+<<<<<<< HEAD
 				String imgCmd = "file -b " + _mediaFile.getAbsolutePath() + " | grep -i image";
 				ProcessBuilder imgCheckBuilder = new ProcessBuilder("/bin/bash","-c", imgCmd);
 				try {
 					//process runthrows IOException
+=======
+				String imgCmd = "file " + _mediaFile.getAbsolutePath() + " | grep -i image";
+				ProcessBuilder imgCheckBuilder = new ProcessBuilder("/bin/bash","-c", imgCmd);
+				try {
+					//process run
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 					Process imgCheck = imgCheckBuilder.start();
 					int imgTerm = imgCheck.waitFor();
 					//a correct termination indicates it is a media file
@@ -224,7 +250,11 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 		} else if (e.getSource() == _generateButton){
 			//generate title page, or credit page depending on title of frame.
 			//check that all fields are not blank.
+<<<<<<< HEAD
 			if (/**_textArea.getText().length() == 0 ||*/ _textField1.getText().length() == 0 || _textField2.getText().length() == 0){
+=======
+			if (_textArea.getText().length() == 0 || _textField1.getText().length() == 0 || _textField2.getText().length() == 0){
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 				JOptionPane.showMessageDialog(this, "There are blank fields! Make sure text, music file, image file are specifed");
 			} else {
 				JFileChooser fileChooser = new JFileChooser();
@@ -234,7 +264,11 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 					//store path of directory to save it to
 					String savePath = fileChooser.getCurrentDirectory().getAbsolutePath();
 					String outputPathName = fileChooser.getSelectedFile().toString();
+<<<<<<< HEAD
 					System.out.println(savePath);
+=======
+					
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 					File out = new File(outputPathName);
 					boolean cancelled = false;
 					//if output name specified exists loop until user selects to overwrite or exits filechooser
@@ -268,6 +302,7 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 					}
 				}
 			}
+<<<<<<< HEAD
 		} else if (e.getSource() == _previewButton){
 			if (_textField1.getText().length() != 0 && _textField2.getText().length() != 0){
 				Previewer viewer = new Previewer();
@@ -280,6 +315,9 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 			}
 			
 		}
+=======
+		} 
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 		
 	}
 

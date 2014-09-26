@@ -181,8 +181,13 @@ public class MainPanel extends JPanel{
 		add(openButton);
 	}
 	//an additional button to easily download files
+<<<<<<< HEAD
 	public void setDownloadButton(JButton dlButton) {
 		add(dlButton);
+=======
+	public void setButton(JButton button) {
+		add(button);
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 	}
 	
 	//----------------------METHODS TO ACCESS PRIVATE OBJECTS-----------//

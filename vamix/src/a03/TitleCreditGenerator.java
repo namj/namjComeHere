@@ -382,8 +382,13 @@ public class TitleCreditGenerator extends SwingWorker<Integer, String> implement
 			Files.deleteIfExists(Paths.get(_savePath + "/file1.ts"));
 			Files.deleteIfExists(Paths.get(_savePath + "/file2.ts"));
 			Files.deleteIfExists(Paths.get(_savePath + "/file3.ts"));
+<<<<<<< HEAD
 			//Files.deleteIfExists(Paths.get(_savePath + "/titleCreditPage.mp4"));
 			//Files.deleteIfExists(Paths.get(_savePath + "/videoFromImage.mp4"));
+=======
+			Files.deleteIfExists(Paths.get(_savePath + "/titleCreditPage.mp4"));
+			Files.deleteIfExists(Paths.get(_savePath + "/videoFromImage.mp4"));
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -19,6 +19,11 @@ public class Downloader extends SwingWorker<Integer,String[]> {
 	private boolean isPaused;
 	//boolean to know whether downloading or not
 	private boolean isRun;
+<<<<<<< HEAD
+=======
+	//save directory + file name
+	private String savePath;
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 	
 	public Downloader(DownloadFrame d) {
 		currentDlFrame = d;
@@ -30,6 +35,7 @@ public class Downloader extends SwingWorker<Integer,String[]> {
 	
 	@Override
 	protected Integer doInBackground() throws Exception {
+<<<<<<< HEAD
 		String cmd = "wget -c --progress=dot " + currentDlFrame.getURL();
 		ProcessBuilder downloadBuilder = new ProcessBuilder("/bin/bash","-c",cmd);
 		downloadBuilder.redirectErrorStream(true);
@@ -43,12 +49,41 @@ public class Downloader extends SwingWorker<Integer,String[]> {
 			}
 			if (isPaused) {
 				download.destroy();
+=======
+		//process builder and bash command to download a file from a URL, and its process
+		String cmd = "wget -c --progress=dot " + currentDlFrame.getURL() + " -O " + savePath + ".mp3";
+		ProcessBuilder downloadBuilder = new ProcessBuilder("/bin/bash","-c",cmd);
+		downloadBuilder.redirectErrorStream(true);
+		Process download = downloadBuilder.start();
+		//stdout of process is read as input
+		InputStream stdout = download.getInputStream();
+		BufferedReader stdoutB = new BufferedReader(new InputStreamReader(stdout));
+		String line = null;
+		//read through each line of the redirected error stream
+		while ((line = stdoutB.readLine()) != null) {
+			//an error code for non media files
+			if (line.contains("wget: unable to resolve host address")) {
+				return 666;
+			}
+			//destroy process when 'paused or cancelled'
+			if (isPaused) {
+				download.destroy();
+				//return for a normal pause command
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 				return 667;
 			}
 			if(isCancelled) {
 				download.destroy();
+<<<<<<< HEAD
 				break;
 			}
+=======
+				//loops is broken when cancelled
+				break;
+			}
+			//waits for the line to contain 'Length:' which allows the retrieval of the 
+			//file size of media download
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 			if (line.contains("Length:")) {
 				int sB1 = line.indexOf('[');
 				int sB2 = line.indexOf(']');
@@ -62,6 +97,10 @@ public class Downloader extends SwingWorker<Integer,String[]> {
 					return 666;
 				}
 			}
+<<<<<<< HEAD
+=======
+			//for when download starts, obtain data and update by publish()
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 			if (line.contains("..........")) {
 				int percent = line.indexOf('%');
 				String number = line.substring(percent-3, percent).replaceAll("[^0-9]", "");
@@ -83,6 +122,10 @@ public class Downloader extends SwingWorker<Integer,String[]> {
 				publish(info);
 			}
 		}
+<<<<<<< HEAD
+=======
+		//obtain exit value, via get()
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 		int exitValue = download.waitFor();
 		return exitValue;
 	}
@@ -142,6 +185,15 @@ public class Downloader extends SwingWorker<Integer,String[]> {
 		currentDlFrame.updateDlInfo(number, speed, time);
 	}
 	
+<<<<<<< HEAD
+=======
+	//method to set the save directory/file name 
+	public void setSave(String save) {
+		savePath = save;
+	}
+	
+	//method to pause* operation
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 	public void pause() {
 		isPaused = true;
 	}
@@ -151,6 +203,10 @@ public class Downloader extends SwingWorker<Integer,String[]> {
 		isCancelled = true;
 	}
 	
+<<<<<<< HEAD
+=======
+	//method to check if downloader is still running
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 	public boolean isRunning() {
 		return isRun;
 	}

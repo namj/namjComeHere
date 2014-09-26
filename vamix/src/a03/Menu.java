@@ -30,16 +30,30 @@ public class Menu extends JFrame implements ActionListener{
 	//Main frame size
 	private static final int _menuHeight = 900;
 	private static final int _menuWidth = 1200;
+<<<<<<< HEAD
  
 	private String _mediaPath = "";
 	private File _mediaFile;
+=======
+
+	private String _mediaPath = "";
+	private File _mediaFile;
+	private String savePath = "";
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 	
 	private MainPanel container;
 	private EmbeddedMediaPlayerComponent ourMediaPlayer;
 	private EmbeddedMediaPlayer currentVideo;
+<<<<<<< HEAD
 	
 	private JButton openButton;
 	private JButton dlButton;
+=======
+	//additional buttons for the main panel
+	private JButton openButton;
+	private JButton dlButton;
+	private JButton editButton;
+>>>>>>> 1d2df0380db5a8bd8f38a92c51a7fe350b674709
 	
 	public Menu() {
 		
@@ -96,7 +110,14 @@ public class Menu extends JFrame implements ActionListener{
 		dlButton.setLocation(50,15);
 		dlButton.setActionCommand("Download File");
 		dlButton.addActionListener(this);
-		container.setDownloadButton(dlButton);
+		container.setButton(dlButton);
+		
+		//a shortcut edit button for the edit function frame
+		editButton = new JButton("Edit");
+		editButton.setBounds(220, 15, 150, 40);
+		editButton.setActionCommand("Edit");
+		editButton.addActionListener(this);
+		container.setButton(editButton);
 		
 		setContentPane(container);
 		
@@ -104,6 +125,106 @@ public class Menu extends JFrame implements ActionListener{
 		
 		//Menu bar added
 		setJMenuBar(setUpMenuBar());
+
+	}
+	
+	//Method to set up menu bar to be used in the frame
+	private JMenuBar setUpMenuBar() {
+		//create object for all menu bar, menus and items
+		JMenu file, edit, help, _space, _space2;
+
+		JMenuItem _open, _exit, _dl, _title, _credit;
+		JMenuItem _rmAudio,_exAudio,_ovAudio, _rpAudio, _read;
+		JMenuBar menuBar = new JMenuBar();
+		
+		//set the graphics (color) for the Menu bar
+		menuBar.setBackground(Color.DARK_GRAY);
+		menuBar.setBorderPainted(true);
+		
+		//empty spaces to put in between menu options (spacings)
+		_space = new JMenu();
+		_space.setEnabled(false);
+		_space2 = new JMenu();
+		_space2.setEnabled(false);
+		
+		//setup of menu 'file' 
+		file = new JMenu("File");
+		file.setForeground(Color.LIGHT_GRAY);
+		//setup of all the items belonging to the 'file' menu
+		_open = new JMenuItem("Open");
+		_dl = new JMenuItem("Download");
+		_open.setActionCommand("Open File");
+		_open.addActionListener(this);
+		_dl.setActionCommand("Download File");
+		_dl.addActionListener(this);
+		_exit = new JMenuItem("Exit");
+		_exit.setActionCommand("Exit");
+		_exit.addActionListener(this);
+		file.add(_open);
+		file.add(_dl);
+		file.addSeparator();
+		file.add(_exit);
+		menuBar.add(file);
+		menuBar.add(_space);
+		
+		//setup of menu 'edit'
+		edit = new JMenu("Edit");
+		edit.setForeground(Color.LIGHT_GRAY);
+		//setup of all the items belonging to the 'edit' menu
+		_title = new JMenuItem("Add title page(s)");
+		_title.setActionCommand("Create title");
+		_title.addActionListener(this);
+		edit.add(_title);
+		_credit = new JMenuItem("Add credit page(s)");
+		_credit.setActionCommand("Create credit");
+		_credit.addActionListener(this);
+		edit.add(_credit);
+		edit.addSeparator();
+		_rmAudio = new JMenuItem("Remove Audio");
+		_rmAudio.setActionCommand("rmAudio");
+		_rmAudio.addActionListener(this);
+		_exAudio = new JMenuItem("Extract Audio");
+		_exAudio.setActionCommand("exAudio");
+		_exAudio.addActionListener(this);
+		_ovAudio = new JMenuItem("Overlay Audio");
+		_ovAudio.setActionCommand("ovAudio");
+		_ovAudio.addActionListener(this);
+		_rpAudio = new JMenuItem("Replace Audio");
+		_rpAudio.setActionCommand("rpAudio");
+		_rpAudio.addActionListener(this);
+		edit.add(_rmAudio);
+		edit.add(_exAudio);
+		edit.add(_ovAudio);
+		edit.add(_rpAudio);
+
+		menuBar.add(edit);
+		menuBar.add(_space2);
+		
+		//setup of menu 'help'
+		help = new JMenu("Help");
+		help.setForeground(Color.LIGHT_GRAY);
+		_read = new JMenuItem("Open ReadMe");
+		_read.setActionCommand("Open readme");
+		_read.addActionListener(this);
+		help.add(_read);
+		menuBar.add(help);
+		
+		//final menu bar is returned at the end of the setup 
+		return menuBar;
+	}
+	
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				new Menu().setVisible(true);
+				int r = JOptionPane.showConfirmDialog(null, "New to this? Would you like to open a helper?");
+				if (r == JOptionPane.YES_OPTION) {
+					openHelpFrame();
+				} else {
+					//nothing happens
+				}
+			}
+		});
 	}
 	
 	private int checkAudioSignal() {
@@ -145,100 +266,6 @@ public class Menu extends JFrame implements ActionListener{
 			return 1;
 		}
 		return 2;
-	}
-	
-	//Method to set up menu bar to be used in the frame
-	private JMenuBar setUpMenuBar() {
-		//create object for all menu bar, menus and items
-		JMenu file, edit, help, _space, _space2;
-		JMenuItem _save, _open, _close, _exit, _dl, _title, _credit;
-		JMenuItem _rmAudio,_exAudio,_ovAudio, _rpAudio;
-		JMenuBar menuBar = new JMenuBar();
-		
-		//set the graphics (color) for the Menu bar
-		menuBar.setBackground(Color.DARK_GRAY);
-		menuBar.setBorderPainted(true);
-		
-		//empty spaces to put in between menu options (spacings)
-		_space = new JMenu();
-		_space.setEnabled(false);
-		_space2 = new JMenu();
-		_space2.setEnabled(false);
-		
-		//setup of menu 'file' 
-		file = new JMenu("File");
-		file.setForeground(Color.LIGHT_GRAY);
-		file.setMnemonic(KeyEvent.VK_F);
-		//setup of all the items belonging to the 'file' menu
-		_save = new JMenuItem("Save");
-		_open = new JMenuItem("Open");
-		_dl = new JMenuItem("Download");
-		_open.setActionCommand("Open File");
-		_open.addActionListener(this);
-		_dl.setActionCommand("Download File");
-		_dl.addActionListener(this);
-		_close = new JMenuItem("Close");
-		_exit = new JMenuItem("Exit");
-		_close.setActionCommand("Close");
-		_close.addActionListener(this);
-		file.add(_save);
-		file.add(_open);
-		file.add(_dl);
-		file.add(_close);
-		file.add(_exit);
-		menuBar.add(file);
-		menuBar.add(_space);
-		
-		//setup of menu 'edit'
-		edit = new JMenu("Edit");
-		edit.setForeground(Color.LIGHT_GRAY);
-		edit.setMnemonic(KeyEvent.VK_E);
-		//setup of all the items belonging to the 'edit' menu
-		_title = new JMenuItem("Add title page(s)");
-		_title.setActionCommand("Create title");
-		_title.addActionListener(this);
-		edit.add(_title);
-		_credit = new JMenuItem("Add credit page(s)");
-		_credit.setActionCommand("Create credit");
-		_credit.addActionListener(this);
-		edit.add(_credit);
-
-		_rmAudio = new JMenuItem("Remove Audio");
-		_rmAudio.setActionCommand("rmAudio");
-		_rmAudio.addActionListener(this);
-		_exAudio = new JMenuItem("Extract Audio");
-		_exAudio.setActionCommand("exAudio");
-		_exAudio.addActionListener(this);
-		_ovAudio = new JMenuItem("Overlay Audio");
-		_ovAudio.setActionCommand("ovAudio");
-		_ovAudio.addActionListener(this);
-		_rpAudio = new JMenuItem("Replace Audio");
-		_rpAudio.setActionCommand("rpAudio");
-		_rpAudio.addActionListener(this);
-		edit.add(_rmAudio);
-		edit.add(_exAudio);
-		edit.add(_ovAudio);
-		edit.add(_rpAudio);
-
-		menuBar.add(edit);
-		menuBar.add(_space2);
-		
-		//setup of menu 'help'
-		help = new JMenu("Help");
-		help.setForeground(Color.LIGHT_GRAY);
-		help.setMnemonic(KeyEvent.VK_H);
-		menuBar.add(help);
-		
-		//final menu bar is returned at the end of the setup 
-		return menuBar;
-	}
-	
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new Menu().setVisible(true);
-			}
-		});
 	}
 	
 	//method to start playing a video given a file
@@ -320,6 +347,20 @@ public class Menu extends JFrame implements ActionListener{
 			//nothing happens when cancelled
 		}
 	}
+	
+	public int setUpSaveFile() {
+		JFileChooser saveChooser = new JFileChooser(_mediaFile);
+		saveChooser.setDialogTitle("Select directory, enter file name to save as...");
+		int response = saveChooser.showSaveDialog(null);
+		if (response == JFileChooser.APPROVE_OPTION) {
+			savePath = saveChooser.getSelectedFile().getAbsolutePath();
+		}
+		return response;
+	}
+	
+	public static void openHelpFrame() {
+		HelpFrame help = new HelpFrame();
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -344,10 +385,29 @@ public class Menu extends JFrame implements ActionListener{
 			if (dlURL == null) {
 				//download cancelled before beginning
 			} else {
-				//download frame opened and download commences
-				DownloadFrame downloadFrame = new DownloadFrame(dlURL);
-				downloadFrame.startDownload();
+				String msg = "Is this an open source file?";
+				int reply = JOptionPane.showConfirmDialog(null, msg);
+				//Whether its open source is confirmed, if yes
+				if (reply == JOptionPane.YES_OPTION) {
+					int rep = setUpSaveFile();
+					if (rep == JFileChooser.APPROVE_OPTION) {
+						//download frame opened and download commences
+						DownloadFrame downloadFrame = new DownloadFrame(dlURL);
+						downloadFrame.setSaveDir(savePath);
+						downloadFrame.startDownload();
+					}
+				} else if (reply == JOptionPane.NO_OPTION){
+					String warning = "Please only download from open source files\n"
+							+ "Downloading non-open source files are illegal!";
+					JOptionPane.showMessageDialog(null, warning);
+				}
 			}
+		} else if (e.getActionCommand().equals("Edit")) {
+			//pop up edit frame when edit button or item is selected
+			EditFrame editFrame = new EditFrame(this);
+		} else if (e.getActionCommand().equals("Exit")) {
+			//exit when exit item is pressed
+			System.exit(0);
 		} else if (e.getActionCommand().equals("rmAudio")) {
 			//attain return value from checking audio signal
 			int audioCheck = checkAudioSignal();
@@ -360,9 +420,13 @@ public class Menu extends JFrame implements ActionListener{
 					//perform extraction based on 'rm&ex' when yes 
 					extractAudio("rm&ex");
 				} else if (response == JOptionPane.NO_OPTION) {
-					//if no, begin audio process for removal (rm)
-					AudioProcessor aP = new AudioProcessor("rm",_mediaFile);
-					aP.execute();
+					int rep = setUpSaveFile();
+					if (rep == JFileChooser.APPROVE_OPTION) {
+						//if no, begin audio process for removal (rm)
+						AudioProcessor aP = new AudioProcessor("rm",_mediaFile);
+						aP.setSaveDir(savePath);
+						aP.execute();
+					}
 				}
 			//if check returns a 2, no audio signal
 			} else if (audioCheck == 2) {
@@ -382,24 +446,37 @@ public class Menu extends JFrame implements ActionListener{
 				JOptionPane.showMessageDialog(null,msg);
 			}
 		} else if (e.getActionCommand().equals("ovAudio")) {
+			//same as above
 			int audioCheck = checkAudioSignal();
 			if (audioCheck == 0) {
-				OverlayFrame ovFrame = new OverlayFrame(currentVideo,_mediaFile);
+				int rep = setUpSaveFile();
+				if (rep == JFileChooser.APPROVE_OPTION) {
+					//overlay frame pops up after audio is checked
+					OverlayFrame ovFrame = new OverlayFrame(currentVideo,_mediaFile, savePath);
+				}
 			} else if (audioCheck == 2) {
 				String msg = "The media contains no audio signal!\n" +
 						"There is no audio to be overlayed.";
 				JOptionPane.showMessageDialog(null,msg);
 			}
 		} else if (e.getActionCommand().equals("rpAudio")) {
+			//gets checked audio int
 			int audioCheck = checkAudioSignal();
-
+			//doesn't matter whether there is an audio signal or not
 			if (audioCheck == 0 || audioCheck == 2) {
-				ReplaceFrame rpFrame = new ReplaceFrame(currentVideo,_mediaFile);
+				int rep = setUpSaveFile();
+				if (rep == JFileChooser.APPROVE_OPTION) {
+					ReplaceFrame rpFrame = new ReplaceFrame(currentVideo,_mediaFile, savePath);
+				}
 			}
+		//for command create title/credit page, open appropriate frame
 		} else if (e.getActionCommand().equals("Create title")){
 			CreateTitleCreditFrame titleFrame = new CreateTitleCreditFrame(_mediaPath, "Create Title page(s)");
 		} else if (e.getActionCommand().equals("Create credit")){
-			CreateTitleCreditFrame titleFrame = new CreateTitleCreditFrame(_mediaPath, "Create Credit page(s)");
+			CreateTitleCreditFrame creditFrame = new CreateTitleCreditFrame(_mediaPath, "Create Credit page(s)");
+		//when help item is pressed, open the readme file in a scrollpane
+		} else if (e.getActionCommand().equals("Open readme")) {
+			openHelpFrame();
 		}
 	}
 }
