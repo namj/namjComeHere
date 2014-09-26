@@ -76,8 +76,8 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 		
 		//setup JComboBox(s)
 		String[] fonts = {"FreeMono.ttf", "Kinnari.ttf", "Purisa-Oblique.ttf", "TakaoPGothic.ttf", "TlwgTypist-Bold.ttf", "Ubuntu-M.ttf"};
-		String[] sizes = { "10" , "20", "30", "40", "50", "60" };
-		String[] colours = { "red", "blue", "white", "black" };
+		String[] sizes = { "10" , "20", "30", "40", "50", "60", "70"};
+		String[] colours = { "black", "white", "red", "blue", "yellow", "green", "purple", "orange" };
 		_font = new JComboBox<String>(fonts);
 		_textSize = new JComboBox<String>(sizes);
 		_colour = new JComboBox<String>(colours);
@@ -173,7 +173,7 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 				_mediaFile = fileChooser.getSelectedFile();
 			
 				//bash command to 'grep' to verify file as audio
-				String audCmd = "file " + _mediaFile.getAbsolutePath() + " | grep -i audio";
+				String audCmd = "file -b " + _mediaFile.getAbsolutePath() + " | grep -i audio";
 				ProcessBuilder audCheckBuilder = new ProcessBuilder("/bin/bash","-c",audCmd);
 				try {
 					//process run
@@ -204,7 +204,7 @@ public class CreateTitleCreditFrame extends JFrame implements ActionListener {
 				_mediaFile = fileChooser.getSelectedFile();
 			
 				//bash command to 'grep' to verify file as audio
-				String imgCmd = "file " + _mediaFile.getAbsolutePath() + " | grep -i image";
+				String imgCmd = "file -b " + _mediaFile.getAbsolutePath() + " | grep -i image";
 				ProcessBuilder imgCheckBuilder = new ProcessBuilder("/bin/bash","-c", imgCmd);
 				try {
 					//process runthrows IOException
